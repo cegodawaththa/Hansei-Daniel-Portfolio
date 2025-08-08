@@ -480,8 +480,10 @@ const sidebarMenuButtonVariants = cva(
       variant: {
         default:
           "hover:bg-sidebar-accent/70 hover:text-sidebar-accent-foreground",
-        active: "bg-accent text-accent-foreground",
-        secondary: "hover:bg-secondary hover:text-foreground",
+        active:
+          "bg-primary/20 text-primary hover:bg-primary/30 hover:text-primary",
+        secondary:
+          "hover:bg-secondary hover:text-foreground focus:bg-primary/20 focus:text-primary/80",
         outline:
           "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]"
       },
