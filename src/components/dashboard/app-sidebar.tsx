@@ -9,7 +9,8 @@ import {
   IconMilitaryAward,
   IconRosette,
   IconBuildings,
-  IconPennant
+  IconPennant,
+  IconBooks
 } from "@tabler/icons-react";
 import * as React from "react";
 
@@ -48,6 +49,11 @@ const data = {
       title: "Core Qualifications",
       url: "/dashboard/core-qualifications",
       icon: IconRosette
+    },
+    {
+      title: "Education",
+      url: "/dashboard/education",
+      icon: IconBooks
     },
     {
       title: "Accomplishments",
@@ -100,7 +106,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
 
                 <span className="text-base font-semibold font-heading">
-                  {`Hansei Daniel - Portfolio`}
+                  {`Hansei Daniel`}
                 </span>
               </div>
             </SidebarMenuButton>
