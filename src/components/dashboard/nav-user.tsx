@@ -7,12 +7,8 @@ import {
   IconUserCircle
 } from "@tabler/icons-react";
 
-import { SignoutButton } from "@/features/auth/components/signout-button";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage
-} from "@repo/ui/components/avatar";
+import { SignoutButton } from "@/modules/auth/components/signout-button";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,13 +17,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from "@repo/ui/components/dropdown-menu";
+} from "../ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar
-} from "@repo/ui/components/sidebar";
+} from "../ui/sidebar";
 
 export function NavUser({
   user
