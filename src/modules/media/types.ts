@@ -59,7 +59,7 @@ export const mediaUpdateSchema = createInsertSchema(media)
 
 export type MediaUpdateType = z.infer<typeof mediaUpdateSchema>;
 
-const PROJECT_FOLDER = "nextplate-minimal";
+const PROJECT_FOLDER = "hansei-daniel";
 
 export enum MediaUploadPaths {
   GALLERY = `${PROJECT_FOLDER}/gallery`
