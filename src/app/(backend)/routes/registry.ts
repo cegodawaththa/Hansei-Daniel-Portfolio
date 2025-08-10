@@ -5,9 +5,13 @@ import createApp from "@/lib/server/create-app";
 
 import tasks from "./tasks";
 import media from "./media";
+import settings from "./settings";
 
 export function registerRoutes(app: AppOpenAPI) {
-  return app.route("/tasks", tasks).route("/media", media);
+  return app
+    .route("/tasks", tasks)
+    .route("/media", media)
+    .route("/settings", settings);
 }
 
 // stand alone router type used for api client
