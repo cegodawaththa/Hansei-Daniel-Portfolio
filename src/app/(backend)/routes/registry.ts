@@ -9,6 +9,7 @@ import settings from "./settings";
 import accomplishments from "./accomplishments";
 import qualifications from "./qualifications";
 import education from "./education";
+import inquiries from "./inquiries";
 
 export function registerRoutes(app: AppOpenAPI) {
   return app
@@ -17,7 +18,8 @@ export function registerRoutes(app: AppOpenAPI) {
     .route("/settings", settings)
     .route("/accomplishments", accomplishments)
     .route("/qualifications", qualifications)
-    .route("/education", education);
+    .route("/education", education)
+    .route("/inquiries", inquiries);
 }
 
 // stand alone router type used for api client
