@@ -62,5 +62,6 @@ export type MediaUpdateType = z.infer<typeof mediaUpdateSchema>;
 const PROJECT_FOLDER = "hansei-daniel";
 
 export enum MediaUploadPaths {
-  GALLERY = `${PROJECT_FOLDER}/gallery`
+  GALLERY = `${PROJECT_FOLDER}/gallery`,
+  EDITOR = `${PROJECT_FOLDER}/editor`
 }
