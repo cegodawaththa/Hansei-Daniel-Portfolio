@@ -7,6 +7,7 @@ import { db } from "@/database";
 import { education } from "@/database/schema";
 import type {
   ListRoute,
+  GetByIdRoute,
   CreateRoute,
   UpdateRoute,
   RemoveRoute
@@ -77,6 +78,31 @@ export const list: AppRouteHandler<ListRoute> = async (c) => {
       },
       HttpStatusCodes.OK
     );
+  } catch {
+    return c.json(
+      { message: HttpStatusPhrases.INTERNAL_SERVER_ERROR },
+      HttpStatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+// Get education by ID handler (no authentication required)
+export const getById: AppRouteHandler<GetByIdRoute> = async (c) => {
+  const params = c.req.valid("param");
+
+  try {
+    const educationItem = await db.query.education.findFirst({
+      where: eq(education.id, params.id)
+    });
+
+    if (!educationItem) {
+      return c.json(
+        { message: "Education not found" },
+        HttpStatusCodes.NOT_FOUND
+      );
+    }
+
+    return c.json(educationItem, HttpStatusCodes.OK);
   } catch {
     return c.json(
       { message: HttpStatusPhrases.INTERNAL_SERVER_ERROR },

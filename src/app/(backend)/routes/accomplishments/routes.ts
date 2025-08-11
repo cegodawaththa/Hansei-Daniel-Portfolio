@@ -38,6 +38,31 @@ export const list = createRoute({
   }
 });
 
+// Get accomplishment by ID route definition (no authentication required)
+export const getById = createRoute({
+  tags,
+  summary: "Get accomplishment by ID",
+  method: "get",
+  path: "/:id",
+  request: {
+    params: stringIdParamSchema
+  },
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(
+      accomplishmentsSchema,
+      "The accomplishment item"
+    ),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      errorMessageSchema,
+      "Accomplishment not found"
+    ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      errorMessageSchema,
+      "Something went wrong"
+    )
+  }
+});
+
 // Create accomplishment route definition
 export const create = createRoute({
   tags,
@@ -122,6 +147,7 @@ export const remove = createRoute({
 
 // Export types
 export type ListRoute = typeof list;
+export type GetByIdRoute = typeof getById;
 export type CreateRoute = typeof create;
 export type UpdateRoute = typeof update;
 export type RemoveRoute = typeof remove;

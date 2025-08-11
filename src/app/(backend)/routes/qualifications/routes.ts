@@ -38,6 +38,31 @@ export const list = createRoute({
   }
 });
 
+// Get qualification by ID route definition (no authentication required)
+export const getById = createRoute({
+  tags,
+  summary: "Get qualification by ID",
+  method: "get",
+  path: "/:id",
+  request: {
+    params: stringIdParamSchema
+  },
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(
+      qualificationsSchema,
+      "The qualification item"
+    ),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      errorMessageSchema,
+      "Qualification not found"
+    ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      errorMessageSchema,
+      "Something went wrong"
+    )
+  }
+});
+
 // Create qualification route definition
 export const create = createRoute({
   tags,
@@ -119,6 +144,7 @@ export const remove = createRoute({
 
 // Export types
 export type ListRoute = typeof list;
+export type GetByIdRoute = typeof getById;
 export type CreateRoute = typeof create;
 export type UpdateRoute = typeof update;
 export type RemoveRoute = typeof remove;

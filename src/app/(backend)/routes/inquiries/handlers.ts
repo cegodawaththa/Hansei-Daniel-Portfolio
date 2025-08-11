@@ -7,6 +7,7 @@ import { db } from "@/database";
 import { inquiries } from "@/database/schema";
 import type {
   ListRoute,
+  GetByIdRoute,
   CreateRoute,
   UpdateRoute,
   RemoveRoute
@@ -88,6 +89,41 @@ export const list: AppRouteHandler<ListRoute> = async (c) => {
       },
       HttpStatusCodes.OK
     );
+  } catch {
+    return c.json(
+      { message: HttpStatusPhrases.INTERNAL_SERVER_ERROR },
+      HttpStatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+// Get inquiry by ID handler (authentication required - admin only)
+export const getById: AppRouteHandler<GetByIdRoute> = async (c) => {
+  const session = c.get("session");
+  const params = c.req.valid("param");
+
+  if (!session) {
+    return c.json(
+      {
+        message: HttpStatusPhrases.UNAUTHORIZED
+      },
+      HttpStatusCodes.UNAUTHORIZED
+    );
+  }
+
+  try {
+    const inquiry = await db.query.inquiries.findFirst({
+      where: eq(inquiries.id, params.id)
+    });
+
+    if (!inquiry) {
+      return c.json(
+        { message: "Inquiry not found" },
+        HttpStatusCodes.NOT_FOUND
+      );
+    }
+
+    return c.json(inquiry, HttpStatusCodes.OK);
   } catch {
     return c.json(
       { message: HttpStatusPhrases.INTERNAL_SERVER_ERROR },

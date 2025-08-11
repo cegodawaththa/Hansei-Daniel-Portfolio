@@ -7,6 +7,7 @@ import { db } from "@/database";
 import { qualifications } from "@/database/schema";
 import type {
   ListRoute,
+  GetByIdRoute,
   CreateRoute,
   UpdateRoute,
   RemoveRoute
@@ -69,6 +70,31 @@ export const list: AppRouteHandler<ListRoute> = async (c) => {
       },
       HttpStatusCodes.OK
     );
+  } catch {
+    return c.json(
+      { message: HttpStatusPhrases.INTERNAL_SERVER_ERROR },
+      HttpStatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+// Get qualification by ID handler (no authentication required)
+export const getById: AppRouteHandler<GetByIdRoute> = async (c) => {
+  const params = c.req.valid("param");
+
+  try {
+    const qualification = await db.query.qualifications.findFirst({
+      where: eq(qualifications.id, params.id)
+    });
+
+    if (!qualification) {
+      return c.json(
+        { message: "Qualification not found" },
+        HttpStatusCodes.NOT_FOUND
+      );
+    }
+
+    return c.json(qualification, HttpStatusCodes.OK);
   } catch {
     return c.json(
       { message: HttpStatusPhrases.INTERNAL_SERVER_ERROR },

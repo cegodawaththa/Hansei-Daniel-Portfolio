@@ -1,7 +1,8 @@
-import { sql } from "drizzle-orm";
+import { sql, relations } from "drizzle-orm";
 import { index, pgTable, text } from "drizzle-orm/pg-core";
 
 import { timestamps } from "@/lib/helpers";
+import { experiences } from "./experiences.schema";
 
 export const projects = pgTable(
   "projects",
@@ -12,7 +13,7 @@ export const projects = pgTable(
 
     name: text("name").notNull(),
     description: text("description"),
-    thumbnails: text("thumbnail").array(),
+    thumbnails: text("thumbnails").array(),
 
     projectType: text("project_type"),
     location: text("location"),
@@ -27,3 +28,7 @@ export const projects = pgTable(
     index("project_type_idx").on(table.projectType)
   ]
 );
+
+export const projectRelations = relations(projects, ({ many }) => ({
+  experiences: many(experiences)
+}));

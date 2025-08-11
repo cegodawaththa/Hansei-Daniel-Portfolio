@@ -42,6 +42,32 @@ export const list = createRoute({
   }
 });
 
+// Get inquiry by ID route definition (authentication required - admin only)
+export const getById = createRoute({
+  tags,
+  summary: "Get inquiry by ID",
+  method: "get",
+  path: "/:id",
+  request: {
+    params: stringIdParamSchema
+  },
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(inquiriesSchema, "The inquiry item"),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      errorMessageSchema,
+      "Inquiry not found"
+    ),
+    [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
+      errorMessageSchema,
+      "Unauthorized access"
+    ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      errorMessageSchema,
+      "Something went wrong"
+    )
+  }
+});
+
 // Create inquiry route definition (public - no authentication for contact forms)
 export const create = createRoute({
   tags,
@@ -113,6 +139,7 @@ export const remove = createRoute({
 
 // Export types
 export type ListRoute = typeof list;
+export type GetByIdRoute = typeof getById;
 export type CreateRoute = typeof create;
 export type UpdateRoute = typeof update;
 export type RemoveRoute = typeof remove;

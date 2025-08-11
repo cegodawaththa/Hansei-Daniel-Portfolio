@@ -14,7 +14,7 @@ export const experiences = pgTable(
     role: text("role"),
     content: text("content"),
 
-    project: text("project_type").references(() => projects.id, {
+    project: text("project").references(() => projects.id, {
       onDelete: "set null"
     }),
 

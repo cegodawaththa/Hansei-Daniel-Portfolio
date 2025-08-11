@@ -7,6 +7,7 @@ import { db } from "@/database";
 import { accomplishments } from "@/database/schema";
 import type {
   ListRoute,
+  GetByIdRoute,
   CreateRoute,
   UpdateRoute,
   RemoveRoute
@@ -69,6 +70,31 @@ export const list: AppRouteHandler<ListRoute> = async (c) => {
       },
       HttpStatusCodes.OK
     );
+  } catch {
+    return c.json(
+      { message: HttpStatusPhrases.INTERNAL_SERVER_ERROR },
+      HttpStatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+// Get accomplishment by ID handler (no authentication required)
+export const getById: AppRouteHandler<GetByIdRoute> = async (c) => {
+  const params = c.req.valid("param");
+
+  try {
+    const accomplishment = await db.query.accomplishments.findFirst({
+      where: eq(accomplishments.id, params.id)
+    });
+
+    if (!accomplishment) {
+      return c.json(
+        { message: "Accomplishment not found" },
+        HttpStatusCodes.NOT_FOUND
+      );
+    }
+
+    return c.json(accomplishment, HttpStatusCodes.OK);
   } catch {
     return c.json(
       { message: HttpStatusPhrases.INTERNAL_SERVER_ERROR },

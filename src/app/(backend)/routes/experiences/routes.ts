@@ -10,17 +10,17 @@ import {
   stringIdParamSchema
 } from "@/lib/server/helpers";
 import {
-  educationSchema,
-  insertEducationSchema,
-  updateEducationSchema
-} from "@/lib/zod/education.zod";
+  insertExperiencesSchema,
+  updateExperiencesSchema,
+  experiencesWithProjectSchema
+} from "@/lib/zod/experiences.zod";
 
-const tags: string[] = ["Education"];
+const tags: string[] = ["Experiences"];
 
-// List route definition (no authentication required)
+// List route definition (no authentication required) - includes related project data
 export const list = createRoute({
   tags,
-  summary: "List all education",
+  summary: "List all experiences with related projects",
   path: "/",
   method: "get",
   request: {
@@ -28,8 +28,8 @@ export const list = createRoute({
   },
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      getPaginatedSchema(z.array(educationSchema)),
-      "The list of education"
+      getPaginatedSchema(z.array(experiencesWithProjectSchema)),
+      "The list of experiences with related projects"
     ),
     [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
       errorMessageSchema,
@@ -38,20 +38,23 @@ export const list = createRoute({
   }
 });
 
-// Get education by ID route definition (no authentication required)
+// Get experience by ID route definition (no authentication required) - includes related project data
 export const getById = createRoute({
   tags,
-  summary: "Get education by ID",
+  summary: "Get experience by ID with related project",
   method: "get",
   path: "/:id",
   request: {
     params: stringIdParamSchema
   },
   responses: {
-    [HttpStatusCodes.OK]: jsonContent(educationSchema, "The education item"),
+    [HttpStatusCodes.OK]: jsonContent(
+      experiencesWithProjectSchema,
+      "The experience with related project"
+    ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       errorMessageSchema,
-      "Education not found"
+      "Experience not found"
     ),
     [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
       errorMessageSchema,
@@ -60,19 +63,19 @@ export const getById = createRoute({
   }
 });
 
-// Create education route definition
+// Create experience route definition
 export const create = createRoute({
   tags,
-  summary: "Create education",
+  summary: "Create experience",
   method: "post",
   path: "/",
   request: {
-    body: jsonContentRequired(insertEducationSchema, "Create education")
+    body: jsonContentRequired(insertExperiencesSchema, "Create experience")
   },
   responses: {
     [HttpStatusCodes.CREATED]: jsonContent(
-      educationSchema,
-      "The education created"
+      experiencesWithProjectSchema,
+      "The experience created with related project"
     ),
     [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
       errorMessageSchema,
@@ -81,37 +84,48 @@ export const create = createRoute({
     [HttpStatusCodes.BAD_REQUEST]: jsonContent(
       errorMessageSchema,
       "Bad request"
+    ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      errorMessageSchema,
+      "Something went wrong"
     )
   }
 });
 
-// Update education route definition
+// Update experience route definition
 export const update = createRoute({
   tags,
-  summary: "Update education",
+  summary: "Update experience",
   method: "patch",
   path: "/:id",
   request: {
     params: stringIdParamSchema,
-    body: jsonContentRequired(updateEducationSchema, "Update education")
+    body: jsonContentRequired(updateExperiencesSchema, "Update experience")
   },
   responses: {
-    [HttpStatusCodes.OK]: jsonContent(educationSchema, "The education updated"),
+    [HttpStatusCodes.OK]: jsonContent(
+      experiencesWithProjectSchema,
+      "The experience updated with related project"
+    ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       errorMessageSchema,
-      "Education not found"
+      "Experience not found"
     ),
     [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
       errorMessageSchema,
       "Unauthorized access"
+    ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      errorMessageSchema,
+      "Something went wrong"
     )
   }
 });
 
-// Delete education route definition
+// Delete experience route definition
 export const remove = createRoute({
   tags,
-  summary: "Remove education",
+  summary: "Remove experience",
   method: "delete",
   path: "/:id",
   request: {
@@ -120,11 +134,11 @@ export const remove = createRoute({
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
       z.object({ message: z.string() }),
-      "Education deleted successfully"
+      "Experience deleted successfully"
     ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       errorMessageSchema,
-      "Education not found"
+      "Experience not found"
     ),
     [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
       errorMessageSchema,
