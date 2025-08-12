@@ -16,3 +16,5 @@ export const insertInquiriesSchema = createInsertSchema(inquiries).omit({
 export type InsertInquiriesSchemaT = z.infer<typeof insertInquiriesSchema>;
 
 export const updateInquiriesSchema = insertInquiriesSchema.partial();
+
+export type UpdateInquiriesSchemaT = z.infer<typeof updateInquiriesSchema>;
