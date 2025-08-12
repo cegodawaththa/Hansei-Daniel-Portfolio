@@ -5,7 +5,9 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "codeville.s3.ap-southeast-1.amazonaws.com"
+        hostname: "codeville.s3.ap-southeast-1.amazonaws.com",
+        port: "",
+        pathname: "/**"
       }
     ]
   }

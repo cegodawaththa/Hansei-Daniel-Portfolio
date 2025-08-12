@@ -14,8 +14,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { AccomplishmentsSchemaT } from "@/lib/zod/accomplishments.zod";
-import { UpdateAccomplishment } from "../update";
 import { DeleteAccomplishment } from "../delete";
+import Link from "next/link";
 
 // This type is used to define the shape of our data.
 export type Accomplishment = Omit<AccomplishmentsSchemaT, "createdAt"> & {
@@ -30,7 +30,7 @@ export const columns: ColumnDef<Accomplishment>[] = [
     cell: ({ row }) => {
       const thumbnail = row.getValue("thumbnail") as string;
       return (
-        <div className="flex items-center justify-center w-16 h-16">
+        <div className="flex items-center justify-center w-12 h-12 overflow-hidden">
           {thumbnail ? (
             <Image
               src={thumbnail}
@@ -103,11 +103,11 @@ export const columns: ColumnDef<Accomplishment>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-            <UpdateAccomplishment id={accomplishment.id}>
-              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+            <DropdownMenuItem asChild>
+              <Link href={`/dashboard/accomplishments/${accomplishment.id}`}>
                 Edit Accomplishment
-              </DropdownMenuItem>
-            </UpdateAccomplishment>
+              </Link>
+            </DropdownMenuItem>
 
             <DeleteAccomplishment id={accomplishment.id}>
               <DropdownMenuItem

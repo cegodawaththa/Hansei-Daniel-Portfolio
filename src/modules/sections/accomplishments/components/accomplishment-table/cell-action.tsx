@@ -12,14 +12,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Accomplishment } from "./columns";
-import { UpdateAccomplishment } from "../update";
 import { DeleteAccomplishment } from "../delete";
+import { useRouter } from "next/navigation";
 
 interface CellActionProps {
   data: Accomplishment;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
+  const router = useRouter();
+
   return (
     <>
       <DropdownMenu modal={false}>
@@ -32,11 +34,14 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-          <UpdateAccomplishment id={data.id}>
-            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-              Edit Accomplishment
-            </DropdownMenuItem>
-          </UpdateAccomplishment>
+          <DropdownMenuItem
+            onSelect={(e) => {
+              e.preventDefault();
+              router.push(`/dashboard/accomplishments/${data.id}`);
+            }}
+          >
+            Edit Accomplishment
+          </DropdownMenuItem>
 
           <DeleteAccomplishment id={data.id}>
             <DropdownMenuItem
