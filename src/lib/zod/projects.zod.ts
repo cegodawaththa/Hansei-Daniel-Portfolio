@@ -49,3 +49,5 @@ export const insertProjectsSchema = createInsertSchema(projects).omit({
 export type InsertProjectsSchemaT = z.infer<typeof insertProjectsSchema>;
 
 export const updateProjectsSchema = insertProjectsSchema.partial();
+
+export type UpdateProjectsSchemaT = z.infer<typeof updateProjectsSchema>;
