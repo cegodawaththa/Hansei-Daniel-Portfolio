@@ -14,16 +14,16 @@ import {
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { useDeleteQualification } from "../queries/use-delete-qualification";
+import { useDeleteAccomplishment } from "../queries/use-delete-accomplishment";
 
 type Props = {
   id: string;
   children: React.ReactNode;
 };
 
-export function DeleteQualification({ id, children }: Props) {
+export function DeleteAccomplishment({ id, children }: Props) {
   const [open, setOpen] = useState(false);
-  const { mutate, isPending } = useDeleteQualification(id);
+  const { mutate, isPending } = useDeleteAccomplishment(id);
 
   const handleDelete = () => {
     mutate(undefined, {
@@ -40,8 +40,8 @@ export function DeleteQualification({ id, children }: Props) {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete selected
-            data and remove from our servers.
+            This action cannot be undone. This will permanently delete this
+            accomplishment and remove it from our servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

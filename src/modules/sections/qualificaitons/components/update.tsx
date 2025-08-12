@@ -65,13 +65,17 @@ export function UpdateQualification({
   }, [currentQualification, form]);
 
   const onSubmit = async (values: UpdateQualificationsSchemaT) => {
-    await mutateAsync(values, {
-      onSuccess: () => {
-        form.reset();
-      }
-    });
-
-    setIsOpen(false);
+    try {
+      await mutateAsync(values, {
+        onSuccess: () => {
+          form.reset();
+          setIsOpen(false);
+        }
+      });
+    } catch (error) {
+      // Error is handled by the mutation itself
+      console.error("Update failed:", error);
+    }
   };
 
   // Handle form submission manually to prevent default behavior

@@ -34,6 +34,7 @@ export const columns: ColumnDef<Qualification>[] = [
   },
   {
     id: "actions",
+    header: "Actions",
     cell: ({ row }) => <CellAction data={row.original} />
   }
 ];

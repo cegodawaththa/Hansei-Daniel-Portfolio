@@ -21,3 +21,7 @@ export type InsertAccomplishmentsSchemaT = z.infer<
 
 export const updateAccomplishmentsSchema =
   insertAccomplishmentsSchema.partial();
+
+export type UpdateAccomplishmentsSchemaT = z.infer<
+  typeof updateAccomplishmentsSchema
+>;
