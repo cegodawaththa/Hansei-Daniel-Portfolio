@@ -2,8 +2,8 @@
 
 import {
   IconDashboard,
-  IconHelp,
-  IconSearch,
+  // IconHelp,
+  // IconSearch,
   IconSettings,
   IconList,
   IconMilitaryAward,
@@ -76,17 +76,17 @@ const data = {
       title: "Settings",
       url: "/dashboard/settings",
       icon: IconSettings
-    },
-    {
-      title: "Get Help",
-      url: "#",
-      icon: IconHelp
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: IconSearch
     }
+    // {
+    //   title: "Get Help",
+    //   url: "#",
+    //   icon: IconHelp
+    // },
+    // {
+    //   title: "Search",
+    //   url: "#",
+    //   icon: IconSearch
+    // }
   ]
 };
 
