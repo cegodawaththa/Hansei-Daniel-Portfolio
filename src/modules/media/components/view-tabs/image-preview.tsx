@@ -1,10 +1,10 @@
-import { Button } from "@repo/ui/components/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger
-} from "@repo/ui/components/dialog";
+} from "@/components/ui/dialog";
 import { EyeIcon } from "lucide-react";
 import Image from "next/image";
 
