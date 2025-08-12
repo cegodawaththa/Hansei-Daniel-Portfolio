@@ -6,6 +6,8 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PlusCircleIcon } from "lucide-react";
+import { ExperienceTableActions } from "@/modules/sections/experiences/components/experience-table/experience-table-actions";
+import ExperienceTable from "@/modules/sections/experiences/components/listing";
 
 export default function ExperiencesPage() {
   return (
@@ -22,6 +24,10 @@ export default function ExperiencesPage() {
         />
 
         <Separator />
+
+        <ExperienceTableActions />
+
+        <ExperienceTable />
       </div>
     </PageContainer>
   );

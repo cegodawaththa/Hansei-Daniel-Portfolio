@@ -4,12 +4,12 @@ import { toast } from "sonner";
 
 import { getClient } from "@/lib/rpc/client";
 
-export const useDeleteExperience = () => {
+export const useDeleteExperience = (id: string) => {
   const queryClient = useQueryClient();
   const toastId = useId();
 
   const mutation = useMutation({
-    mutationFn: async (id: string) => {
+    mutationFn: async () => {
       const rpcClient = await getClient();
 
       const response = await rpcClient.api.experiences[":id"].$delete({

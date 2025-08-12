@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { getClient } from "@/lib/rpc/client";
 import { type UpdateExperiencesSchemaT } from "@/lib/zod/experiences.zod";
 
-export const useCreateExperience = (id: string) => {
+export const useUpdateExperience = (id: string) => {
   const queryClient = useQueryClient();
   const toastId = useId();
 
