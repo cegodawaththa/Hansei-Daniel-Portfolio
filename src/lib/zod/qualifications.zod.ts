@@ -20,3 +20,7 @@ export type InsertQualificationsSchemaT = z.infer<
 >;
 
 export const updateQualificationSchema = insertQualificationsSchema.partial();
+
+export type UpdateQualificationsSchemaT = z.infer<
+  typeof updateQualificationSchema
+>;

@@ -2,6 +2,13 @@ import React, { useEffect } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CheckIcon } from "lucide-react";
+import {
+  FaFacebook,
+  FaLinkedin,
+  FaInstagram,
+  FaSquareXTwitter
+} from "react-icons/fa6";
 
 import { Card } from "@/components/ui/card";
 import {
@@ -15,7 +22,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { CheckIcon, Globe, Share2, Hash, Camera } from "lucide-react";
 import { useSettingsStore } from "../../store";
 import { useUpdateSettings } from "../../queries/use-update-settings";
 
@@ -74,7 +80,7 @@ export function SocialSettingsForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="flex items-center gap-2">
-                    <Globe className="size-4 text-blue-600" />
+                    <FaFacebook className="size-4 text-blue-600" />
                     Facebook
                   </FormLabel>
                   <FormControl>
@@ -98,7 +104,7 @@ export function SocialSettingsForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="flex items-center gap-2">
-                    <Share2 className="size-4 text-blue-700" />
+                    <FaLinkedin className="size-4 text-blue-700" />
                     LinkedIn
                   </FormLabel>
                   <FormControl>
@@ -120,7 +126,7 @@ export function SocialSettingsForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="flex items-center gap-2">
-                    <Hash className="size-4 text-sky-500" />
+                    <FaSquareXTwitter className="size-4 text-zinc-900" />
                     Twitter / X
                   </FormLabel>
                   <FormControl>
@@ -144,7 +150,7 @@ export function SocialSettingsForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="flex items-center gap-2">
-                    <Camera className="size-4 text-pink-600" />
+                    <FaInstagram className="size-4 text-pink-600" />
                     Instagram
                   </FormLabel>
                   <FormControl>
