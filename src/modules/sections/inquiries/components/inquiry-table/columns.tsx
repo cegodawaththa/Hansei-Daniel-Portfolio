@@ -1,11 +1,8 @@
 "use client";
 
-import { type ColumnDef } from "@tanstack/react-table";
-import { format } from "date-fns";
+import { ColumnDef } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-
 import { InquiriesSchemaT } from "@/lib/zod/inquiries.zod";
 import { CellAction } from "./cell-action";
 
@@ -17,74 +14,34 @@ export type Inquiry = Omit<InquiriesSchemaT, "createdAt"> & {
 
 export const columns: ColumnDef<Inquiry>[] = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-        className="translate-y-[2px]"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-        className="translate-y-[2px]"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false
-  },
-  {
     accessorKey: "name",
     header: "Name",
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]">
-            {row.getValue("name")}
-          </span>
-        </div>
-      );
-    }
+    cell: ({ row }) => <div className="font-medium">{row.getValue("name")}</div>
   },
   {
     accessorKey: "email",
     header: "Email",
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]">
-            {row.getValue("email")}
-          </span>
-        </div>
-      );
-    }
+    cell: ({ row }) => (
+      <div className="text-muted-foreground">{row.getValue("email")}</div>
+    )
   },
   {
     accessorKey: "company",
     header: "Company",
     cell: ({ row }) => {
       const company = row.getValue("company") as string | null;
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]">
-            {company || "N/A"}
-          </span>
-        </div>
-      );
+      return <div className="text-muted-foreground">{company || "N/A"}</div>;
     }
   },
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      const status = row.getValue("status") as "unread" | "read" | "archived";
+      const status = row.getValue("status") as
+        | "unread"
+        | "read"
+        | "archived"
+        | null;
 
       const getStatusColor = (status: string) => {
         switch (status) {
@@ -99,7 +56,11 @@ export const columns: ColumnDef<Inquiry>[] = [
         }
       };
 
-      return <Badge className={getStatusColor(status)}>{status}</Badge>;
+      return (
+        <Badge className={getStatusColor(status || "unread")}>
+          {status || "unread"}
+        </Badge>
+      );
     }
   },
   {
@@ -107,30 +68,13 @@ export const columns: ColumnDef<Inquiry>[] = [
     header: "Message",
     cell: ({ row }) => {
       const message = row.getValue("message") as string;
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-32 truncate sm:max-w-72 md:max-w-[31rem]">
-            {message}
-          </span>
-        </div>
-      );
+      return <div className="max-w-32 truncate">{message}</div>;
     }
   },
   {
     accessorKey: "createdAt",
     header: "Created At",
-    cell: ({ row }) => {
-      return (
-        <div className="flex w-[100px] items-center">
-          <span>
-            {format(new Date(row.getValue("createdAt")), "MMM dd, yyyy")}
-          </span>
-        </div>
-      );
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    }
+    cell: ({ row }) => new Date(row.original.createdAt).toLocaleDateString()
   },
   {
     id: "actions",

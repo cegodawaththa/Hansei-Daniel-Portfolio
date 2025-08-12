@@ -2,6 +2,7 @@ import React from "react";
 
 import PageContainer from "@/modules/layouts/page-container";
 import { AppPageShell } from "@/modules/layouts/page-shell";
+import { InquiryTableActions } from "@/modules/sections/inquiries/components/inquiry-table/inquiry-table-actions";
 import { Separator } from "@/components/ui/separator";
 import InquiryTable from "@/modules/sections/inquiries/components/listing";
 
@@ -16,6 +17,8 @@ export default function InquiriesPage() {
         />
 
         <Separator />
+
+        <InquiryTableActions />
 
         <InquiryTable />
       </div>
