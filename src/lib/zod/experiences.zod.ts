@@ -17,6 +17,8 @@ export type InsertExperiencesSchemaT = z.infer<typeof insertExperiencesSchema>;
 
 export const updateExperiencesSchema = insertExperiencesSchema.partial();
 
+export type UpdateExperiencesSchemaT = z.infer<typeof updateExperiencesSchema>;
+
 // For relational queries, we need to define the project schema separately to match drizzle's output
 const relatedProjectSchema = z.object({
   id: z.string(),
