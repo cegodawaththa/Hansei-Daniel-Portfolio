@@ -1,4 +1,4 @@
-import { Bricolage_Grotesque, Inter } from "next/font/google";
+import { Bricolage_Grotesque, Inter, Great_Vibes } from "next/font/google";
 
 export const fontSans = Inter({
   subsets: ["latin"],
@@ -8,4 +8,10 @@ export const fontSans = Inter({
 export const fontHeading = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-heading"
+});
+
+export const fontGreatVibes = Great_Vibes({
+  subsets: ["latin"],
+  variable: "--font-signature",
+  weight: ["400"]
 });
