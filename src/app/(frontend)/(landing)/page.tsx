@@ -19,9 +19,9 @@ export default async function Home() {
   return (
     <div className="">
       <HeroSection data={landingPageData} />
-      <AboutSection />
-      <ExperienceSection />
-      <ProjectsSection />
+      <AboutSection data={landingPageData} />
+      <ExperienceSection data={landingPageData} />
+      <ProjectsSection data={landingPageData} />
       <SkillsSection />
       <TestimonialsSection />
       <ContactSection />

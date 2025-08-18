@@ -3,35 +3,21 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { LandingPageData } from "../actions/get-landing-page-data";
 
 type Props = {
   className?: string;
+  data: LandingPageData;
 };
 
-const achievements = [
-  {
-    icon: "🏆",
-    title: "Award Winner",
-    description: "Top Real Estate Agent 2023"
-  },
-  {
-    icon: "👥",
-    title: "Client Focused",
-    description: "98% Client Satisfaction Rate"
-  },
-  {
-    icon: "🎯",
-    title: "Results Driven",
-    description: "50+ Properties Sold Successfully"
-  },
-  {
-    icon: "🔧",
-    title: "Expert Knowledge",
-    description: "20+ Years in Construction & Real Estate"
-  }
-];
+export default function AboutSection({ className, data }: Props) {
+  const pageData = data.data;
 
-export default function AboutSection({ className }: Props) {
+  if (!pageData) return <></>;
+
+  const basicInfo = pageData.basicInfo;
+  const qualifications = pageData.qualifications;
+
   return (
     <section className={cn("py-20 bg-background", className)}>
       <div className="content-container mx-auto">
@@ -46,32 +32,24 @@ export default function AboutSection({ className }: Props) {
                 Results Producing Management Executive
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                With over 20 years of experience in construction and real estate
-                industries, I bring unparalleled expertise in property
-                development, investment strategies, and client relationship
-                management. My commitment to excellence has resulted in
-                successful project completions and satisfied clients across
-                diverse markets.
+                {basicInfo?.fullBio}
               </p>
             </div>
 
             <div className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {achievements.map((achievement, index) => (
+                {qualifications?.slice(0, 4)?.map((qualification, index) => (
                   <Card
                     key={index}
-                    className="border-border/50 hover:border-accent/50 transition-colors duration-300"
+                    className="border-border/50 p-0 hover:border-accent/50 transition-colors duration-300"
                   >
-                    <CardContent className="p-6">
-                      <div className="flex items-start space-x-4">
-                        <div className="text-2xl">{achievement.icon}</div>
-                        <div className="space-y-1">
+                    <CardContent className="px-6 py-3">
+                      <div className="flex items-center space-x-4">
+                        <div className="text-2xl">{`🏆`}</div>
+                        <div className="">
                           <h3 className="font-semibold text-foreground">
-                            {achievement.title}
+                            {qualification.name}
                           </h3>
-                          <p className="text-sm text-muted-foreground">
-                            {achievement.description}
-                          </p>
                         </div>
                       </div>
                     </CardContent>
