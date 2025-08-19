@@ -47,7 +47,7 @@ export default function HeroSection({ className, data }: Props) {
               {/* Left Content */}
               <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
                 <div className="space-y-4">
-                  <Logo className="text-4xl md:text-6xl lg:text-7xl hidden">
+                  <Logo className="text-4xl md:text-6xl lg:text-7xl hidden lg:block">
                     {basicInfo.portfolioName}
                   </Logo>
                   <div className="space-y-2">
