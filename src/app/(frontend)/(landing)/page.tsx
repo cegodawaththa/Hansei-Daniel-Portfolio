@@ -3,10 +3,11 @@ import HeroSection from "@/modules/landing/components/hero";
 import AboutSection from "@/modules/landing/components/about";
 import ExperienceSection from "@/modules/landing/components/experience";
 import ProjectsSection from "@/modules/landing/components/projects";
-import SkillsSection from "@/modules/landing/components/skills";
-import TestimonialsSection from "@/modules/landing/components/testimonials";
+import EducationSection from "@/modules/landing/components/education";
 import ContactSection from "@/modules/landing/components/contact";
 import FooterSection from "@/modules/landing/components/footer";
+
+// import TestimonialsSection from "@/modules/landing/components/testimonials";
 
 export default async function Home() {
   const landingPageData = await getLandingPageData();
@@ -22,9 +23,9 @@ export default async function Home() {
       <AboutSection data={landingPageData} />
       <ExperienceSection data={landingPageData} />
       <ProjectsSection data={landingPageData} />
-      <SkillsSection />
-      <TestimonialsSection />
-      <ContactSection />
+      <EducationSection data={landingPageData} />
+      {/* <TestimonialsSection /> */}
+      <ContactSection data={landingPageData} />
       <FooterSection />
     </div>
   );

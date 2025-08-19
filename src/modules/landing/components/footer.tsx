@@ -1,66 +1,17 @@
 "use client";
 
 import React from "react";
-import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { Mail, Phone, MapPin, ArrowUp } from "lucide-react";
 import Link from "next/link";
+// import { Logo } from "@/components/logo";
+// import { Mail, Phone, MapPin, ArrowUp } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 
 type Props = {
   className?: string;
 };
-
-const footerLinks = {
-  services: [
-    { name: "Residential Sales", href: "/services/residential" },
-    { name: "Commercial Real Estate", href: "/services/commercial" },
-    { name: "Property Management", href: "/services/management" },
-    { name: "Investment Consulting", href: "/services/consulting" },
-    { name: "Construction Services", href: "/services/construction" }
-  ],
-  company: [
-    { name: "About Me", href: "/about" },
-    { name: "My Experience", href: "/experience" },
-    { name: "Portfolio", href: "/projects" },
-    { name: "Testimonials", href: "/testimonials" },
-    { name: "Blog", href: "/blog" }
-  ],
-  resources: [
-    { name: "Market Reports", href: "/resources/reports" },
-    { name: "Property Calculator", href: "/tools/calculator" },
-    { name: "Buyer's Guide", href: "/resources/buyers-guide" },
-    { name: "Seller's Guide", href: "/resources/sellers-guide" },
-    { name: "Investment Tips", href: "/resources/investment" }
-  ]
-};
-
-const socialLinks = [
-  { name: "LinkedIn", url: "https://linkedin.com", icon: "💼" },
-  { name: "Twitter", url: "https://twitter.com", icon: "🐦" },
-  { name: "Facebook", url: "https://facebook.com", icon: "📘" },
-  { name: "Instagram", url: "https://instagram.com", icon: "📷" },
-  { name: "YouTube", url: "https://youtube.com", icon: "🎥" }
-];
-
-const contactInfo = [
-  {
-    icon: Phone,
-    text: "+1 (555) 123-4567",
-    href: "tel:+15551234567"
-  },
-  {
-    icon: Mail,
-    text: "hansei.daniel@realestate.com",
-    href: "mailto:hansei.daniel@realestate.com"
-  },
-  {
-    icon: MapPin,
-    text: "123 Real Estate Plaza, New York, NY 10001",
-    href: "https://maps.google.com"
-  }
-];
 
 export default function FooterSection({ className }: Props) {
   const scrollToTop = () => {
@@ -70,9 +21,8 @@ export default function FooterSection({ className }: Props) {
   return (
     <footer className={cn("bg-card border-t border-border/50", className)}>
       {/* Main Footer Content */}
-      <div className="content-container mx-auto py-16">
+      {/* <div className="content-container mx-auto py-16">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-          {/* Brand Section */}
           <div className="lg:col-span-2 space-y-6">
             <Logo className="text-3xl" />
             <p className="text-muted-foreground leading-relaxed max-w-md">
@@ -81,7 +31,6 @@ export default function FooterSection({ className }: Props) {
               delivering exceptional results and building lasting relationships.
             </p>
 
-            {/* Contact Info */}
             <div className="space-y-3">
               {contactInfo.map((contact, index) => (
                 <a
@@ -95,7 +44,6 @@ export default function FooterSection({ className }: Props) {
               ))}
             </div>
 
-            {/* Social Links */}
             <div className="flex space-x-4">
               {socialLinks.map((social, index) => (
                 <a
@@ -112,7 +60,6 @@ export default function FooterSection({ className }: Props) {
             </div>
           </div>
 
-          {/* Services */}
           <div className="space-y-4">
             <h3 className="font-heading font-semibold text-foreground text-lg">
               Services
@@ -131,7 +78,6 @@ export default function FooterSection({ className }: Props) {
             </ul>
           </div>
 
-          {/* Company */}
           <div className="space-y-4">
             <h3 className="font-heading font-semibold text-foreground text-lg">
               Company
@@ -150,7 +96,6 @@ export default function FooterSection({ className }: Props) {
             </ul>
           </div>
 
-          {/* Resources */}
           <div className="space-y-4">
             <h3 className="font-heading font-semibold text-foreground text-lg">
               Resources
@@ -169,8 +114,6 @@ export default function FooterSection({ className }: Props) {
             </ul>
           </div>
         </div>
-
-        {/* Newsletter Signup */}
         <div className="mt-12 bg-muted/30 rounded-2xl p-8">
           <div className="text-center space-y-4">
             <h3 className="text-2xl font-heading font-bold text-foreground">
@@ -195,11 +138,10 @@ export default function FooterSection({ className }: Props) {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <Separator className="bg-border/50" />
 
-      {/* Bottom Footer */}
       <div className="content-container mx-auto py-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-sm text-muted-foreground">
@@ -228,7 +170,6 @@ export default function FooterSection({ className }: Props) {
             </Link>
           </div>
 
-          {/* Back to Top Button */}
           <Button
             variant="outline"
             size="sm"

@@ -7,58 +7,31 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
+import { MailIcon, MapPinIcon, PhoneIcon, Send } from "lucide-react";
+import { LandingPageData } from "../actions/get-landing-page-data";
+import Link from "next/link";
+import {
+  FaFacebook,
+  FaLinkedin,
+  FaInstagram,
+  FaSquareXTwitter
+} from "react-icons/fa6";
+import { useSendInquiry } from "@/modules/sections/inquiries/queries/use-send-inquiry";
 
 type Props = {
   className?: string;
+  data: LandingPageData;
 };
 
-const contactInfo = [
-  {
-    icon: Phone,
-    title: "Phone",
-    primary: "+1 (555) 123-4567",
-    secondary: "+1 (555) 987-6543",
-    description: "Available Monday to Friday, 9 AM - 6 PM"
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    primary: "hansei.daniel@realestate.com",
-    secondary: "info@hanseidaniel.com",
-    description: "Response within 24 hours"
-  },
-  {
-    icon: MapPin,
-    title: "Office",
-    primary: "123 Real Estate Plaza",
-    secondary: "New York, NY 10001",
-    description: "Visit by appointment"
-  },
-  {
-    icon: Clock,
-    title: "Business Hours",
-    primary: "Monday - Friday: 9 AM - 6 PM",
-    secondary: "Saturday: 10 AM - 4 PM",
-    description: "Sunday: By appointment only"
-  }
-];
+export default function ContactSection({ data, className }: Props) {
+  const basicInfo = data.data?.basicInfo;
 
-const socialLinks = [
-  { name: "LinkedIn", url: "#", icon: "💼" },
-  { name: "Twitter", url: "#", icon: "🐦" },
-  { name: "Facebook", url: "#", icon: "📘" },
-  { name: "Instagram", url: "#", icon: "📷" }
-];
-
-export default function ContactSection({ className }: Props) {
+  const { mutate, isPending } = useSendInquiry();
   const [formData, setFormData] = React.useState({
     name: "",
     email: "",
-    phone: "",
-    subject: "",
-    message: "",
-    propertyType: "residential"
+    company: "",
+    message: ""
   });
 
   const handleInputChange = (
@@ -72,8 +45,26 @@ export default function ContactSection({ className }: Props) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted:", formData);
+
+    mutate(
+      {
+        email: formData.email,
+        name: formData.name,
+        company: formData.company,
+        message: formData.message,
+        status: "unread"
+      },
+      {
+        onSuccess: () => {
+          setFormData({
+            name: "",
+            email: "",
+            company: "",
+            message: ""
+          });
+        }
+      }
+    );
   };
 
   return (
@@ -97,7 +88,7 @@ export default function ContactSection({ className }: Props) {
           {/* Contact Information */}
           <div className="lg:col-span-1 space-y-8">
             <div className="space-y-6">
-              {contactInfo.map((info, index) => (
+              {/* {contactInfo.map((info, index) => (
                 <Card
                   key={index}
                   className="border-border/50 hover:border-accent/50 transition-colors duration-300"
@@ -126,26 +117,132 @@ export default function ContactSection({ className }: Props) {
                     </div>
                   </CardContent>
                 </Card>
-              ))}
+              ))} */}
+
+              {/* Phone Info */}
+              <Card className="border-border/50 hover:border-accent/50 transition-colors duration-300 p-0">
+                <CardContent className="p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <PhoneIcon className="w-6 h-6 text-accent" />
+                    </div>
+                    <div className="space-y-1 flex-1">
+                      <h3 className="font-semibold text-foreground">
+                        Contact Me
+                      </h3>
+                      <p className="text-sm font-medium text-foreground">
+                        {basicInfo?.primaryPhone}
+                      </p>
+                      {basicInfo?.secondaryPhone && (
+                        <p className="text-sm text-muted-foreground">
+                          {basicInfo.secondaryPhone}
+                        </p>
+                      )}
+                      <p className="text-xs text-muted-foreground">
+                        {`Available Monday to Friday, 9 AM - 6 PM`}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Email Info */}
+              <Card className="border-border/50 hover:border-accent/50 transition-colors duration-300 p-0">
+                <CardContent className="p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <MailIcon className="w-6 h-6 text-accent" />
+                    </div>
+                    <div className="space-y-1 flex-1">
+                      <h3 className="font-semibold text-foreground">
+                        Leave a Message
+                      </h3>
+                      <p className="text-sm font-medium text-foreground">
+                        {basicInfo?.primaryEmail}
+                      </p>
+                      {basicInfo?.secondaryEmail && (
+                        <p className="text-sm text-muted-foreground">
+                          {basicInfo.secondaryEmail}
+                        </p>
+                      )}
+                      <p className="text-xs text-muted-foreground">
+                        {`Response within 24 hours`}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Location Info */}
+              <Card className="border-border/50 hover:border-accent/50 transition-colors duration-300 p-0">
+                <CardContent className="p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <MapPinIcon className="w-6 h-6 text-accent" />
+                    </div>
+                    <div className="space-y-1 flex-1">
+                      <h3 className="font-semibold text-foreground">
+                        Location
+                      </h3>
+                      <p className="text-sm font-medium text-foreground">
+                        {basicInfo?.currentAddress}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {`Visit by appointment`}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
             {/* Social Links */}
-            <Card className="border-border/50">
+            <Card className="border-border/50 p-0">
               <CardContent className="p-6">
                 <h3 className="font-semibold text-foreground mb-4">
                   Follow Me
                 </h3>
                 <div className="flex space-x-4">
-                  {socialLinks.map((social, index) => (
-                    <a
-                      key={index}
-                      href={social.url}
+                  {basicInfo?.facebook && (
+                    <Link
+                      target="_blank"
+                      href={basicInfo.facebook}
                       className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-colors duration-300"
-                      aria-label={social.name}
+                      aria-label="Facebook"
                     >
-                      <span className="text-lg">{social.icon}</span>
-                    </a>
-                  ))}
+                      <FaFacebook className="size-4 text-blue-600" />
+                    </Link>
+                  )}
+                  {basicInfo?.linkedin && (
+                    <Link
+                      target="_blank"
+                      href={basicInfo.linkedin}
+                      className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-colors duration-300"
+                      aria-label="Linkedin"
+                    >
+                      <FaLinkedin className="size-4 text-blue-700" />
+                    </Link>
+                  )}
+                  {basicInfo?.twitter && (
+                    <Link
+                      target="_blank"
+                      href={basicInfo.twitter}
+                      className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-colors duration-300"
+                      aria-label="Twitter"
+                    >
+                      <FaSquareXTwitter className="size-4 text-zinc-900" />
+                    </Link>
+                  )}
+                  {basicInfo?.instagram && (
+                    <Link
+                      target="_blank"
+                      href={basicInfo.instagram}
+                      className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-colors duration-300"
+                      aria-label="Instagram"
+                    >
+                      <FaInstagram className="size-4 text-pink-600" />
+                    </Link>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -184,47 +281,14 @@ export default function ContactSection({ className }: Props) {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Phone Number</Label>
-                      <Input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        placeholder="Enter your phone number"
-                        className="border-border/50 focus:border-accent"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="propertyType">Property Interest</Label>
-                      <select
-                        id="propertyType"
-                        name="propertyType"
-                        value={formData.propertyType}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 text-sm border border-border/50 rounded-md focus:outline-none focus:border-accent bg-background"
-                      >
-                        <option value="residential">Residential</option>
-                        <option value="commercial">Commercial</option>
-                        <option value="investment">Investment Property</option>
-                        <option value="development">Development Project</option>
-                        <option value="consultation">
-                          General Consultation
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-
                   <div className="space-y-2">
-                    <Label htmlFor="subject">Subject *</Label>
+                    <Label htmlFor="company">Company</Label>
                     <Input
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
+                      id="company"
+                      name="company"
+                      value={formData.company}
                       onChange={handleInputChange}
-                      placeholder="What would you like to discuss?"
+                      placeholder="ABC Real Estate (pvt) ltd."
                       required
                       className="border-border/50 focus:border-accent"
                     />
@@ -248,39 +312,14 @@ export default function ContactSection({ className }: Props) {
                     type="submit"
                     size="lg"
                     className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
+                    loading={isPending}
                   >
                     Send Message
-                    <Send className="w-5 h-5 ml-2" />
+                    {!isPending && <Send className="w-5 h-5 ml-2" />}
                   </Button>
                 </form>
               </CardContent>
             </Card>
-
-            {/* Call to Action */}
-            <div className="mt-8 bg-muted/30 rounded-2xl p-8 text-center">
-              <h3 className="text-2xl font-heading font-bold text-foreground mb-4">
-                Ready to Get Started?
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                Schedule a free consultation to discuss your real estate goals
-                and discover how I can help you achieve them.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  size="lg"
-                  className="bg-accent hover:bg-accent/90 text-accent-foreground px-8"
-                >
-                  Schedule Consultation
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-accent text-accent hover:bg-accent hover:text-accent-foreground px-8"
-                >
-                  Call Now: (555) 123-4567
-                </Button>
-              </div>
-            </div>
           </div>
         </div>
       </div>

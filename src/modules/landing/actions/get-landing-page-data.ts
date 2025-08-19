@@ -6,6 +6,7 @@ import type { SiteSettingsMapT } from "@/lib/zod/settings.zod";
 import type { QualificationsSchemaT } from "@/lib/zod/qualifications.zod";
 import type { ExperiencesWithProjectSchemaT } from "@/lib/zod/experiences.zod";
 import type { ProjectsWithExperiencesSchemaT } from "@/lib/zod/projects.zod";
+import type { EducationSchemaT } from "@/lib/zod/education.zod";
 
 export interface LandingPageData {
   data: {
@@ -13,6 +14,7 @@ export interface LandingPageData {
     qualifications: QualificationsSchemaT[] | null;
     experiences: ExperiencesWithProjectSchemaT[] | null;
     projects: ProjectsWithExperiencesSchemaT[] | null;
+    education: EducationSchemaT[] | null;
   } | null;
   error: string | null;
 }
@@ -26,7 +28,8 @@ export async function getLandingPageData(): Promise<LandingPageData> {
         basicInfo: null,
         qualifications: null,
         experiences: null,
-        projects: null
+        projects: null,
+        education: null
       },
       error: null
     };
@@ -103,6 +106,25 @@ export async function getLandingPageData(): Promise<LandingPageData> {
       returnData!.data!.projects = projects.data as any;
     } catch (projectsErr) {
       console.error(projectsErr);
+    }
+
+    // =========================================================================
+    // Education Data
+    try {
+      const educationRes = await rpcClient.api.education.$get({
+        query: {}
+      });
+
+      if (!educationRes.ok) {
+        const errorData = await educationRes.json();
+        throw new Error(`Failed to fetch education: ${errorData.message}`);
+      }
+
+      const education = await educationRes.json();
+
+      returnData!.data!.education = education.data as any;
+    } catch (educationError) {
+      console.error(educationError);
     }
 
     return returnData;

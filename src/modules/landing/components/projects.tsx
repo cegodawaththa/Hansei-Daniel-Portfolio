@@ -38,10 +38,10 @@ function ProjectCard({
 
   return (
     <div
-      className="group h-full animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both"
+      className="group h-full animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both overflow-hidden"
       style={{ animationDelay: `${animationDelay}ms` }}
     >
-      <div className="h-full flex flex-col bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 hover:border-accent/50 dark:hover:border-accent/50 shadow-lg hover:shadow-2xl transition-all duration-500 group">
+      <div className="h-full flex flex-col bg-white dark:bg-gray-900 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:border-accent/50 dark:hover:border-accent/50 shadow-lg hover:shadow-2xl transition-all duration-500 group">
         {/* Image Container with Overlay */}
         <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
           <Image
