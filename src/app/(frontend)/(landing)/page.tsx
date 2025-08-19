@@ -5,7 +5,6 @@ import ExperienceSection from "@/modules/landing/components/experience";
 import ProjectsSection from "@/modules/landing/components/projects";
 import EducationSection from "@/modules/landing/components/education";
 import ContactSection from "@/modules/landing/components/contact";
-import FooterSection from "@/modules/landing/components/footer";
 
 // import TestimonialsSection from "@/modules/landing/components/testimonials";
 
@@ -26,7 +25,6 @@ export default async function Home() {
       <EducationSection data={landingPageData} />
       {/* <TestimonialsSection /> */}
       <ContactSection data={landingPageData} />
-      <FooterSection />
     </div>
   );
 }

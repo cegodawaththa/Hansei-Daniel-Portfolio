@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { LandingPageData } from "../actions/get-landing-page-data";
-import { NavigationBar } from "./navbar";
+// import { NavigationBar } from "./navbar";
 
 import { cn } from "@/lib/utils";
 
@@ -37,8 +37,8 @@ export default function HeroSection({ className, data }: Props) {
         <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/40 to-transparent" />
       </div>
 
-      <div className="relative z-10 h-full flex flex-col">
-        <NavigationBar />
+      <div className="relative z-10 h-full flex flex-col pt-20">
+        {/* <NavigationBar /> */}
 
         {/* Hero Section Content */}
         <div className="flex-1 flex items-center">
@@ -47,7 +47,7 @@ export default function HeroSection({ className, data }: Props) {
               {/* Left Content */}
               <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
                 <div className="space-y-4">
-                  <Logo className="text-4xl md:text-6xl lg:text-7xl block">
+                  <Logo className="text-4xl md:text-6xl lg:text-7xl hidden">
                     {basicInfo.portfolioName}
                   </Logo>
                   <div className="space-y-2">

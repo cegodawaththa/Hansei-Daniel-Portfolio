@@ -20,6 +20,7 @@ export default async function authMiddleware(request: NextRequest) {
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-url", request.url);
+  requestHeaders.set("x-current-path", request.nextUrl.pathname);
 
   if (authRoutes.includes(pathname) || isProtectedPath) {
     // Fetch session
