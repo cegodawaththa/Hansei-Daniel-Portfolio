@@ -1,8 +1,27 @@
+import { Metadata } from "next";
 import { getLandingPageData } from "@/modules/landing/actions/get-landing-page-data";
 import { PageHeader } from "@/modules/landing/components/page-header";
 import { ExperienceList } from "@/modules/landing/subpages/experiences-list";
+import { generateMetadata as genMetadata } from "@/lib/utils/metadata";
 
-export default async function ProjectsPage() {
+export const metadata: Metadata = genMetadata({
+  title: "Hansie Daniel's Experience",
+  description:
+    "Discover Hansie Daniel's professional journey in real estate development and construction management. With over 20 years of experience, explore his expertise in project management, forecasting, budgeting, and developing innovative solutions across various construction and real estate projects.",
+  keywords: [
+    "Hansie Daniel experience",
+    "construction management experience",
+    "real estate development background",
+    "project management expertise",
+    "construction industry career",
+    "property development experience",
+    "real estate professional Toronto",
+    "construction project achievements"
+  ],
+  url: "/experience"
+});
+
+export default async function ExperiencePage() {
   const landingPageData = await getLandingPageData();
 
   return (

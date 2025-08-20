@@ -12,7 +12,7 @@ export function PageHeader({ className, title, subtitle }: Props) {
   return (
     <div
       className={cn(
-        "relative overflow-hidden w-full h-[40vh] bg-gradient-to-tr from-primary to-transparent",
+        "relative overflow-hidden w-full h-[30vh] sm:h-[35vh] lg:h-[40vh] bg-gradient-to-tr from-primary to-transparent",
         className
       )}
     >
@@ -28,16 +28,18 @@ export function PageHeader({ className, title, subtitle }: Props) {
         <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/40 to-transparent" />
       </div>
 
-      <div className="relative z-10 h-full flex flex-col pt-20">
+      <div className="relative z-10 h-full flex flex-col pt-16 sm:pt-20">
         {/* <NavigationBar /> */}
 
         {/* Hero Section Content */}
         <div className="flex-1 flex items-center">
-          <div className="content-container mx-auto">
-            <h1 className="text-4xl font-bold text-white font-heading">
+          <div className="content-container mx-auto px-4 sm:px-6">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-heading">
               {title}
             </h1>
-            <p className="mt-2 text-lg text-white">{subtitle}</p>
+            <p className="mt-2 text-sm sm:text-base lg:text-lg text-white">
+              {subtitle}
+            </p>
           </div>
         </div>
       </div>

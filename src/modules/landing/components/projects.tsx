@@ -43,7 +43,7 @@ export function ProjectCard({
     >
       <div className="h-full flex flex-col bg-white dark:bg-gray-900 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:border-accent/50 dark:hover:border-accent/50 shadow-lg hover:shadow-2xl transition-all duration-500 group">
         {/* Image Container with Overlay */}
-        <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+        <div className="relative h-48 sm:h-56 w-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
           <Image
             src={projectImage}
             alt={project.name}
@@ -55,25 +55,23 @@ export function ProjectCard({
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
 
           {/* Top Row - Type and Value */}
-          <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-start z-10">
+          <div className="absolute top-0 left-0 right-0 p-3 sm:p-4 flex justify-between items-start z-10">
             {/* Project Type Badge */}
             {project.projectType && (
               <Badge
                 variant="secondary"
-                className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md text-foreground shadow-lg border-white/20 px-3 py-1.5 flex items-center gap-1.5"
+                className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md text-foreground shadow-lg border-white/20 px-2 sm:px-3 py-1 sm:py-1.5 flex items-center gap-1 sm:gap-1.5 text-xs"
               >
-                <Building2 className="w-3.5 h-3.5" />
-                <span className="text-xs font-medium">
-                  {project.projectType}
-                </span>
+                <Building2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                <span className="font-medium">{project.projectType}</span>
               </Badge>
             )}
 
             {/* Project Value */}
             {project.projectValue && (
-              <div className="bg-gradient-to-r from-accent to-accent/80 backdrop-blur-md text-white px-3.5 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
-                <TrendingUp className="w-3.5 h-3.5" />
-                <span className="font-bold text-sm">
+              <div className="bg-gradient-to-r from-accent to-accent/80 backdrop-blur-md text-white px-2 sm:px-3.5 py-1 sm:py-1.5 rounded-full shadow-lg flex items-center gap-1 sm:gap-1.5">
+                <TrendingUp className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                <span className="font-bold text-xs sm:text-sm">
                   {project.projectValue}
                 </span>
               </div>
@@ -81,14 +79,14 @@ export function ProjectCard({
           </div>
 
           {/* Decorative Corner Element */}
-          <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-accent/20 to-transparent rounded-tl-full" />
+          <div className="absolute bottom-0 right-0 w-16 h-16 sm:w-24 sm:h-24 bg-gradient-to-tl from-accent/20 to-transparent rounded-tl-full" />
         </div>
 
         {/* Content Section */}
-        <div className="flex-grow p-6 space-y-4">
+        <div className="flex-grow p-4 sm:p-6 space-y-3 sm:space-y-4">
           {/* Title */}
           <div>
-            <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-gray-100 line-clamp-2 group-hover:text-accent transition-colors duration-300">
+            <h3 className="text-lg sm:text-xl font-heading font-bold text-gray-900 dark:text-gray-100 line-clamp-2 group-hover:text-accent transition-colors duration-300">
               {project.name}
             </h3>
           </div>
@@ -103,8 +101,8 @@ export function ProjectCard({
           {/* Project Details Pills */}
           <div className="flex flex-wrap gap-2">
             {project.location && (
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
-                <MapPin className="w-3.5 h-3.5 text-accent" />
+              <div className="inline-flex items-center gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-xs sm:text-sm">
+                <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-accent" />
                 <span className="text-gray-700 dark:text-gray-300 font-medium">
                   {project.location}
                 </span>
@@ -112,8 +110,8 @@ export function ProjectCard({
             )}
 
             {project.client && (
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
-                <Users className="w-3.5 h-3.5 text-accent" />
+              <div className="inline-flex items-center gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-xs sm:text-sm">
+                <Users className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-accent" />
                 <span className="text-gray-700 dark:text-gray-300 font-medium">
                   {project.client}
                 </span>
@@ -123,10 +121,10 @@ export function ProjectCard({
 
           {/* Experiences Section */}
           {project.experiences && project.experiences.length > 0 && (
-            <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
-              <div className="space-y-3">
+            <div className="pt-3 sm:pt-4 border-t border-gray-200 dark:border-gray-800">
+              <div className="space-y-2 sm:space-y-3">
                 <div className="flex items-center gap-2">
-                  <Briefcase className="w-4 h-4 text-accent" />
+                  <Briefcase className="w-3 h-3 sm:w-4 sm:h-4 text-accent" />
                   <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Key Contributions
                   </span>
@@ -136,7 +134,7 @@ export function ProjectCard({
                   {project.experiences.slice(0, 2).map((exp) => (
                     <div
                       key={exp.id}
-                      className="group/exp bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-lg p-3 hover:from-accent/5 hover:to-accent/10 transition-all duration-300"
+                      className="group/exp bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-lg p-2 sm:p-3 hover:from-accent/5 hover:to-accent/10 transition-all duration-300"
                     >
                       <div className="flex items-start justify-between gap-2 mb-1">
                         <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 group-hover/exp:text-accent transition-colors">
@@ -145,7 +143,9 @@ export function ProjectCard({
                         {exp.duration && (
                           <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
                             <Calendar className="w-3 h-3" />
-                            <span>{exp.duration}</span>
+                            <span className="hidden sm:inline">
+                              {exp.duration}
+                            </span>
                           </div>
                         )}
                       </div>
@@ -172,14 +172,14 @@ export function ProjectCard({
         </div>
 
         {/* Card Footer with Action */}
-        <div className="p-6 pt-0 mt-auto">
+        <div className="p-4 sm:p-6 pt-0 mt-auto">
           <Button
             variant="outline"
-            className="w-full group/btn border-gray-200 dark:border-gray-700 hover:bg-accent hover:text-white hover:border-accent transition-all duration-300"
+            className="w-full group/btn border-gray-200 dark:border-gray-700 hover:bg-accent hover:text-white hover:border-accent transition-all duration-300 text-sm"
           >
-            <Sparkles className="w-4 h-4 mr-2" />
+            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
             View Project Details
-            <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover/btn:translate-x-1" />
+            <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-2 transition-transform duration-300 group-hover/btn:translate-x-1" />
           </Button>
         </div>
       </div>
