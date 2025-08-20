@@ -23,7 +23,7 @@ type Props = {
   data: LandingPageData;
 };
 
-function ProjectCard({
+export function ProjectCard({
   project,
   index
 }: {

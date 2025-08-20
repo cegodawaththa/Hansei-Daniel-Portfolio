@@ -21,9 +21,14 @@ import { useSendInquiry } from "@/modules/sections/inquiries/queries/use-send-in
 type Props = {
   className?: string;
   data: LandingPageData;
+  isPage?: boolean;
 };
 
-export default function ContactSection({ data, className }: Props) {
+export default function ContactSection({
+  data,
+  className,
+  isPage = false
+}: Props) {
   const basicInfo = data.data?.basicInfo;
 
   const { mutate, isPending } = useSendInquiry();
@@ -71,18 +76,20 @@ export default function ContactSection({ data, className }: Props) {
     <section className={cn("py-20 bg-background", className)}>
       <div className="content-container mx-auto">
         {/* Section Header */}
-        <div className="text-center space-y-4 mb-16">
-          <div className="inline-flex items-center px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-medium">
-            Get In Touch
+        {!isPage && (
+          <div className="text-center space-y-4 mb-16">
+            <div className="inline-flex items-center px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-medium">
+              Get In Touch
+            </div>
+            <h2 className="text-4xl lg:text-5xl font-heading font-bold text-foreground">
+              Let&apos;s Start a Conversation
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Ready to make your real estate dreams a reality? Get in touch
+              today for a personalized consultation.
+            </p>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-heading font-bold text-foreground">
-            Let&apos;s Start a Conversation
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Ready to make your real estate dreams a reality? Get in touch today
-            for a personalized consultation.
-          </p>
-        </div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Contact Information */}

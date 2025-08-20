@@ -22,7 +22,11 @@ type Props = {
   data: LandingPageData;
 };
 
-function ExperienceCard({ data }: { data: ExperiencesWithProjectSchemaT }) {
+export function ExperienceCard({
+  data
+}: {
+  data: ExperiencesWithProjectSchemaT;
+}) {
   return (
     <Card className="w-full border-border/50 hover:border-accent/50 transition-all duration-300 hover:shadow-lg group bg-white backdrop-blur-sm">
       <CardHeader className="pb-6">
