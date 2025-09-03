@@ -1,10 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-
 import { getClient } from "@/lib/rpc/client";
 
-export const useGetSettings = () => {
+export const useGetCvLink = () => {
   const query = useQuery({
-    queryKey: ["settings"],
+    queryKey: ["settings", "cvLink"],
     queryFn: async () => {
       const rpcClient = await getClient();
 
@@ -12,15 +11,14 @@ export const useGetSettings = () => {
 
       if (!response.ok) {
         const { message } = await response.json();
-
         throw new Error(message);
       }
 
       const data = await response.json();
-      console.log(data);
-
-      return data;
-    }
+      return data?.cvLink || null;
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000 // 10 minutes
   });
 
   return query;

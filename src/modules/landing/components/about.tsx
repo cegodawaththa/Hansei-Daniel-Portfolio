@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { LandingPageData } from "../actions/get-landing-page-data";
+import Link from "next/link";
+import { DownloadCVButton } from "./download-cv";
 
 type Props = {
   className?: string;
@@ -91,18 +93,22 @@ export default function AboutSection({
               {!isPage && (
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button
+                    asChild
                     size="lg"
                     className="bg-accent hover:bg-accent/90 text-accent-foreground px-8"
                   >
-                    Learn More About Me
+                    <Link href="/about">Learn More About Me</Link>
                   </Button>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="border-accent text-accent hover:bg-accent hover:text-accent-foreground px-8"
-                  >
-                    Download Full CV
-                  </Button>
+
+                  <DownloadCVButton>
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="border-accent text-accent hover:bg-accent hover:text-accent-foreground px-8"
+                    >
+                      Download Full CV
+                    </Button>
+                  </DownloadCVButton>
                 </div>
               )}
             </div>

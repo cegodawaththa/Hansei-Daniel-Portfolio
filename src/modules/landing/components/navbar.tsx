@@ -6,7 +6,9 @@ import { cn } from "@/lib/utils";
 import { DownloadIcon, MenuIcon, XIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
+import { DownloadCVButton } from "./download-cv";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Props = {
   className?: string;
@@ -112,19 +114,21 @@ export function NavigationBar({ className }: Props) {
           </div>
 
           {/* Download CV Button */}
-          <Button
-            variant={isScrolled ? "default" : "outline"}
-            icon={<DownloadIcon />}
-            className={cn(
-              " transition-all duration-300 font-medium py-2  backdrop-blur-sm px-8 rounded-full",
-              {
-                "border border-primary-foreground bg-transparent hover:bg-white/10 text-primary-foreground":
-                  !isScrolled
-              }
-            )}
-          >
-            Download CV
-          </Button>
+          <DownloadCVButton>
+            <Button
+              variant={isScrolled ? "default" : "outline"}
+              icon={<DownloadIcon />}
+              className={cn(
+                " transition-all duration-300 font-medium py-2  backdrop-blur-sm px-8 rounded-full",
+                {
+                  "border border-primary-foreground bg-transparent hover:bg-white/10 text-primary-foreground":
+                    !isScrolled
+                }
+              )}
+            >
+              Download CV
+            </Button>
+          </DownloadCVButton>
         </div>
 
         {/* Mobile Menu Button */}
@@ -190,13 +194,19 @@ export function NavigationBar({ className }: Props) {
 
             {/* Download CV Button */}
             <div className="px-6 py-4 border-t border-gray-200">
-              <Button
-                variant="default"
-                icon={<DownloadIcon />}
-                className="w-full font-medium py-3"
+              <Suspense
+                fallback={<Skeleton className="w-full h-11 rounded-md" />}
               >
-                Download CV
-              </Button>
+                <DownloadCVButton>
+                  <Button
+                    variant="default"
+                    icon={<DownloadIcon />}
+                    className="w-full font-medium py-3"
+                  >
+                    Download CV
+                  </Button>
+                </DownloadCVButton>
+              </Suspense>
             </div>
           </div>
         </div>
