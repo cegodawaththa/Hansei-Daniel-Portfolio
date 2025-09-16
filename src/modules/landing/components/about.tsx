@@ -120,7 +120,7 @@ export default function AboutSection({
               <div className="relative w-full h-[600px] rounded-2xl overflow-hidden">
                 <Image
                   src="/assets/images/hero_person_with_bg.jpeg"
-                  alt="Hansei Daniel - Professional Portrait"
+                  alt="Hansie Daniel - Professional Portrait"
                   fill
                   className="object-cover object-center scale-125 translate-x-10"
                   priority

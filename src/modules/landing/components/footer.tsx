@@ -145,7 +145,7 @@ export default function FooterSection({ className }: Props) {
       <div className="content-container mx-auto py-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Hansei Daniel Real Estate. All rights
+            © {new Date().getFullYear()} Hansie Daniel Real Estate. All rights
             reserved.
           </div>
 

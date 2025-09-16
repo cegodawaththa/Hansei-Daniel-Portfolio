@@ -106,7 +106,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
 
                 <span className="text-base font-semibold font-heading">
-                  {`Hansei Daniel`}
+                  {`Hansie Daniel`}
                 </span>
               </div>
             </SidebarMenuButton>

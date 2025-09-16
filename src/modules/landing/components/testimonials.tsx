@@ -17,7 +17,7 @@ const testimonials = [
     location: "Manhattan, NY",
     avatar: "/assets/images/hero_person.png",
     rating: 5,
-    text: "Hansei made our dream home a reality. His expertise in the Manhattan market and attention to detail throughout the entire process was exceptional. We couldn't have asked for a better agent.",
+    text: "Hansie made our dream home a reality. His expertise in the Manhattan market and attention to detail throughout the entire process was exceptional. We couldn't have asked for a better agent.",
     propertyType: "Luxury Apartment",
     dealValue: "$2.8M"
   },
@@ -28,7 +28,7 @@ const testimonials = [
     location: "Brooklyn, NY",
     avatar: "/assets/images/hero_person.png",
     rating: 5,
-    text: "Working with Hansei on our commercial property investment was a game-changer. His market analysis and negotiation skills saved us over $500K on our purchase. Highly recommend!",
+    text: "Working with Hansie on our commercial property investment was a game-changer. His market analysis and negotiation skills saved us over $500K on our purchase. Highly recommend!",
     propertyType: "Commercial Building",
     dealValue: "$12.5M"
   },
@@ -39,7 +39,7 @@ const testimonials = [
     location: "Queens, NY",
     avatar: "/assets/images/hero_person.png",
     rating: 5,
-    text: "As a first-time buyer, I was nervous about the process. Hansei guided me through every step with patience and expertise. He found me the perfect home within my budget.",
+    text: "As a first-time buyer, I was nervous about the process. Hansie guided me through every step with patience and expertise. He found me the perfect home within my budget.",
     propertyType: "Family Home",
     dealValue: "$850K"
   },
@@ -50,7 +50,7 @@ const testimonials = [
     location: "Long Island, NY",
     avatar: "/assets/images/hero_person.png",
     rating: 5,
-    text: "Hansei's construction management background was invaluable for our development project. His attention to detail and project coordination skills ensured we completed on time and under budget.",
+    text: "Hansie's construction management background was invaluable for our development project. His attention to detail and project coordination skills ensured we completed on time and under budget.",
     propertyType: "Residential Development",
     dealValue: "$45M"
   },
@@ -61,7 +61,7 @@ const testimonials = [
     location: "Staten Island, NY",
     avatar: "/assets/images/hero_person.png",
     rating: 5,
-    text: "Selling our family home was emotional, but Hansei made it stress-free. His marketing strategy and professional network resulted in multiple offers above asking price within a week.",
+    text: "Selling our family home was emotional, but Hansie made it stress-free. His marketing strategy and professional network resulted in multiple offers above asking price within a week.",
     propertyType: "Family Estate",
     dealValue: "$1.9M"
   },
@@ -72,7 +72,7 @@ const testimonials = [
     location: "Bronx, NY",
     avatar: "/assets/images/hero_person.png",
     rating: 5,
-    text: "Hansei helped us find the perfect location for our new business headquarters. His understanding of commercial real estate and zoning requirements was exactly what we needed.",
+    text: "Hansie helped us find the perfect location for our new business headquarters. His understanding of commercial real estate and zoning requirements was exactly what we needed.",
     propertyType: "Office Space",
     dealValue: "$3.2M"
   }
