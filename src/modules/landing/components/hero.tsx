@@ -111,7 +111,7 @@ export default function HeroSection({ className, data }: Props) {
                 <div className="relative w-full max-w-md lg:max-w-lg h-[400px] lg:h-[600px]">
                   <Image
                     src={"/assets/images/hero_person.png"}
-                    alt="Hansei Daniel - Real Estate Professional"
+                    alt="Hansie Daniel - Real Estate Professional"
                     fill
                     className="object-cover object-top"
                     priority

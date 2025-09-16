@@ -14,7 +14,7 @@ export function Logo({ className, children }: Props) {
         className
       )}
     >
-      {children ? children : "Hansei Daniel"}
+      {children ? children : "Hansie Daniel"}
     </h1>
   );
 }

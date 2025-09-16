@@ -17,14 +17,17 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { CheckIcon } from "lucide-react";
+
 import { useSettingsStore } from "../../store";
 import { useUpdateSettings } from "../../queries/use-update-settings";
+import { CvUploader } from "../cv-uploader";
 
 const basicSettingsSchema = z.object({
   // Basic Information
   portfolioName: z.string(),
   shortDescription: z.string(),
-  fullBio: z.string()
+  fullBio: z.string(),
+  cvLink: z.string().optional()
 });
 
 type BasicSettingsSchema = z.infer<typeof basicSettingsSchema>;
@@ -38,7 +41,8 @@ export function BasicSettingsForm() {
     defaultValues: {
       portfolioName: state.portfolioName,
       shortDescription: state.shortDescription,
-      fullBio: state.fullBio
+      fullBio: state.fullBio,
+      cvLink: state.cvLink
     }
   });
 
@@ -46,7 +50,8 @@ export function BasicSettingsForm() {
     form.reset({
       portfolioName: state.portfolioName,
       shortDescription: state.shortDescription,
-      fullBio: state.fullBio
+      fullBio: state.fullBio,
+      cvLink: state.cvLink
     });
   }, [form, state]);
 
@@ -118,6 +123,27 @@ export function BasicSettingsForm() {
                   </FormControl>
                   <FormDescription>
                     {`This bio will be shown on your portfolio's about page etc.`}
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="cvLink"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>CV File</FormLabel>
+                  <FormControl>
+                    <CvUploader
+                      value={field.value || ""}
+                      onChange={(url) => field.onChange(url || "")}
+                      disabled={isPending}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    {`Upload your CV (PDF) File`}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

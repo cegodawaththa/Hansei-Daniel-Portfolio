@@ -32,7 +32,8 @@ export const getSiteSettingsHandler: AppRouteHandler<
     instagram: "",
     profileImage: "",
     coverImage: "",
-    bioImages: ""
+    bioImages: "",
+    cvLink: ""
   };
 
   for (const setting of allValues) {
@@ -84,6 +85,9 @@ export const getSiteSettingsHandler: AppRouteHandler<
         break;
       case "bioImages":
         mappedSiteSettings.bioImages = setting.value || "";
+        break;
+      case "cvLink":
+        mappedSiteSettings.cvLink = setting.value || "";
         break;
     }
   }

@@ -29,6 +29,7 @@ export const useSettingsStore = create<SettingsStore>((set) => ({
   profileImage: "",
   coverImage: "",
   bioImages: "",
+  cvLink: "",
 
   setTab: (tab) => set({ tab }),
   setSettings: (settings) => set({ ...settings })

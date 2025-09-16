@@ -27,7 +27,10 @@ export const siteSettingsMap = z.object({
   // Images
   profileImage: z.string().optional(),
   coverImage: z.string().optional(),
-  bioImages: z.string().optional()
+  bioImages: z.string().optional(),
+
+  // CV Link
+  cvLink: z.string().optional()
 });
 
 export const siteSettingsMapInsert = siteSettingsMap.partial();

@@ -48,7 +48,7 @@ export async function getLandingPageData(): Promise<LandingPageData> {
 
       returnData!.data!.basicInfo = basicInfo as SiteSettingsMapT;
     } catch (basicInfoErr) {
-      console.error(basicInfoErr);
+      console.error({ basicInfoErr });
     }
 
     // =========================================================================

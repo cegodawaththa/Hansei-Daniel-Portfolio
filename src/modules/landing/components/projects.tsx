@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import {
   MapPin,
@@ -22,6 +24,232 @@ type Props = {
   className?: string;
   data: LandingPageData;
 };
+
+// Project Details Dialog Component
+function ProjectDetailsDialog({
+  project
+}: {
+  project: ProjectsWithExperiencesSchemaT;
+}) {
+  const projectImage = project.thumbnails?.[0] || "/assets/images/hero_1.jpg";
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="w-full group/btn border-gray-200 dark:border-gray-700 hover:bg-accent hover:text-white hover:border-accent transition-all duration-300 text-sm"
+        >
+          <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+          View Project Details
+          <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-2 transition-transform duration-300 group-hover/btn:translate-x-1" />
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-4xl max-h-[90vh] p-0 overflow-hidden">
+        <ScrollArea className="h-full max-h-[90vh]">
+          <div className="relative">
+            {/* Hero Image Section */}
+            <div className="relative h-64 sm:h-80 w-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+              <Image
+                src={projectImage}
+                alt={project.name}
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+
+              {/* Project badges on hero */}
+              <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-10">
+                {project.projectType && (
+                  <Badge
+                    variant="secondary"
+                    className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md text-foreground shadow-lg border-white/20 px-3 py-1.5 flex items-center gap-1.5"
+                  >
+                    <Building2 className="w-4 h-4" />
+                    <span className="font-medium">{project.projectType}</span>
+                  </Badge>
+                )}
+
+                {project.projectValue && (
+                  <div className="bg-gradient-to-r from-accent to-accent/80 backdrop-blur-md text-white px-4 py-2 rounded-full shadow-lg flex items-center gap-1.5">
+                    <TrendingUp className="w-4 h-4" />
+                    <span className="font-bold">{project.projectValue}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Project title overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent">
+                <h1 className="text-2xl sm:text-3xl font-heading font-bold text-white mb-2">
+                  {project.name}
+                </h1>
+                <div className="flex flex-wrap gap-3">
+                  {project.location && (
+                    <div className="inline-flex items-center gap-2 text-white/90">
+                      <MapPin className="w-4 h-4" />
+                      <span className="text-sm">{project.location}</span>
+                    </div>
+                  )}
+                  {project.client && (
+                    <div className="inline-flex items-center gap-2 text-white/90">
+                      <Users className="w-4 h-4" />
+                      <span className="text-sm">{project.client}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Content Section */}
+            <div className="p-6 space-y-6">
+              {/* Project Description */}
+              {project.description && (
+                <div>
+                  <h2 className="text-xl font-heading font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                    Project Overview
+                  </h2>
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    {project.description}
+                  </p>
+                </div>
+              )}
+
+              {/* Project Details Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {project.projectType && (
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Building2 className="w-5 h-5 text-accent" />
+                      <span className="font-semibold text-gray-900 dark:text-gray-100">
+                        Project Type
+                      </span>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      {project.projectType}
+                    </p>
+                  </div>
+                )}
+
+                {project.location && (
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <MapPin className="w-5 h-5 text-accent" />
+                      <span className="font-semibold text-gray-900 dark:text-gray-100">
+                        Location
+                      </span>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      {project.location}
+                    </p>
+                  </div>
+                )}
+
+                {project.client && (
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Users className="w-5 h-5 text-accent" />
+                      <span className="font-semibold text-gray-900 dark:text-gray-100">
+                        Client
+                      </span>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      {project.client}
+                    </p>
+                  </div>
+                )}
+
+                {project.projectValue && (
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <TrendingUp className="w-5 h-5 text-accent" />
+                      <span className="font-semibold text-gray-900 dark:text-gray-100">
+                        Project Value
+                      </span>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      {project.projectValue}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Experiences Section */}
+              {project.experiences && project.experiences.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <Briefcase className="w-5 h-5 text-accent" />
+                    <h2 className="text-xl font-heading font-semibold text-gray-900 dark:text-gray-100">
+                      Key Contributions & Experiences
+                    </h2>
+                  </div>
+
+                  <div className="space-y-4">
+                    {project.experiences.map((exp, index) => (
+                      <div
+                        key={exp.id}
+                        className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-lg p-5 border border-gray-200 dark:border-gray-700 hover:border-accent/50 transition-all duration-300"
+                      >
+                        <div className="flex items-start justify-between gap-4 mb-3">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-accent/10 rounded-full flex items-center justify-center">
+                              <span className="text-sm font-bold text-accent">
+                                {index + 1}
+                              </span>
+                            </div>
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                              {exp.role}
+                            </h3>
+                          </div>
+                          {exp.duration && (
+                            <div className="flex items-center gap-1.5 bg-white dark:bg-gray-800 px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-600">
+                              <Calendar className="w-4 h-4 text-accent" />
+                              <span className="text-sm text-gray-600 dark:text-gray-400">
+                                {exp.duration}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                        {exp.content && (
+                          <p className="text-gray-600 dark:text-gray-400 leading-relaxed pl-11">
+                            {exp.content}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Additional Project Images */}
+              {project.thumbnails && project.thumbnails.length > 1 && (
+                <div>
+                  <h2 className="text-xl font-heading font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                    Project Gallery
+                  </h2>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {project.thumbnails.slice(1).map((image, index) => (
+                      <div
+                        key={index}
+                        className="relative aspect-video rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800"
+                      >
+                        <Image
+                          src={image}
+                          alt={`${project.name} - Image ${index + 2}`}
+                          fill
+                          className="object-cover hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </ScrollArea>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 export function ProjectCard({
   project,
@@ -173,14 +401,7 @@ export function ProjectCard({
 
         {/* Card Footer with Action */}
         <div className="p-4 sm:p-6 pt-0 mt-auto">
-          <Button
-            variant="outline"
-            className="w-full group/btn border-gray-200 dark:border-gray-700 hover:bg-accent hover:text-white hover:border-accent transition-all duration-300 text-sm"
-          >
-            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-            View Project Details
-            <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-2 transition-transform duration-300 group-hover/btn:translate-x-1" />
-          </Button>
+          <ProjectDetailsDialog project={project} />
         </div>
       </div>
     </div>
