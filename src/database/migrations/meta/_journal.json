@@ -43,6 +43,13 @@
       "when": 1754906787158,
       "tag": "0005_mature_surge",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1758128308916,
+      "tag": "0006_condemned_malcolm_colcord",
+      "breakpoints": true
     }
   ]
 }

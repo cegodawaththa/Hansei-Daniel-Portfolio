@@ -15,7 +15,8 @@ import {
   Briefcase,
   Calendar,
   Sparkles,
-  TrendingUp
+  TrendingUp,
+  ClockIcon
 } from "lucide-react";
 import { LandingPageData } from "../actions/get-landing-page-data";
 import { ProjectsWithExperiencesSchemaT } from "@/lib/zod/projects.zod";
@@ -168,6 +169,20 @@ function ProjectDetailsDialog({
                     </div>
                     <p className="text-gray-600 dark:text-gray-400">
                       {project.projectValue}
+                    </p>
+                  </div>
+                )}
+
+                {project.status && (
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <ClockIcon className="w-5 h-5 text-accent" />
+                      <span className="font-semibold text-gray-900 dark:text-gray-100">
+                        Project Status
+                      </span>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-400 capitalize">
+                      {project.status}
                     </p>
                   </div>
                 )}
@@ -414,12 +429,22 @@ export default function ProjectsSection({ data, className }: Props) {
   );
   const [displayCount, setDisplayCount] = useState(6);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [statusFilter, setStatusFilter] = useState<string>("all");
 
   useEffect(() => {
     if (data && data.data?.projects) {
+      if (statusFilter !== "all") {
+        const filteredProjects = data.data.projects.filter(
+          (project) => project.status === statusFilter
+        );
+
+        setProjects(filteredProjects);
+        return;
+      }
+
       setProjects(data.data.projects);
     }
-  }, [data]);
+  }, [data, statusFilter]);
 
   const handleShowMore = () => {
     if (isExpanded) {
@@ -495,6 +520,37 @@ export default function ProjectsSection({ data, className }: Props) {
             Discover our exceptional real estate and construction projects that
             showcase our expertise and commitment to excellence.
           </p>
+
+          <div className="mt-3 w-full flex items-center justify-center gap-3">
+            <Button
+              variant={statusFilter === "all" ? "default" : "outline"}
+              className="cursor-pointer"
+              onClick={() => setStatusFilter("all")}
+            >
+              All
+            </Button>
+            <Button
+              variant={statusFilter === "completed" ? "default" : "outline"}
+              className="cursor-pointer"
+              onClick={() => setStatusFilter("completed")}
+            >
+              Completed Projects
+            </Button>
+            <Button
+              variant={statusFilter === "ongoing" ? "default" : "outline"}
+              className="cursor-pointer"
+              onClick={() => setStatusFilter("ongoing")}
+            >
+              Under Construction
+            </Button>
+            <Button
+              variant={statusFilter === "future" ? "default" : "outline"}
+              className="cursor-pointer"
+              onClick={() => setStatusFilter("future")}
+            >
+              Upcoming
+            </Button>
+          </div>
         </div>
 
         {/* Projects Grid */}

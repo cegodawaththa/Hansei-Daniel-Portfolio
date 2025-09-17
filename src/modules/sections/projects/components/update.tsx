@@ -26,6 +26,7 @@ import {
   updateProjectsSchema,
   UpdateProjectsSchemaT
 } from "@/lib/zod/projects.zod";
+import { ProjectStatusDropdown } from "./project-status-dropdown";
 
 interface UpdateProjectProps {
   id: string;
@@ -50,6 +51,7 @@ export function UpdateProject({ id }: UpdateProjectProps) {
       description: "",
       thumbnails: [],
       projectType: "",
+      status: null,
       location: "",
       client: "",
       projectValue: ""
@@ -63,6 +65,7 @@ export function UpdateProject({ id }: UpdateProjectProps) {
         description: currentProject.description,
         thumbnails: currentProject.thumbnails,
         projectType: currentProject.projectType,
+        status: currentProject.status,
         location: currentProject.location,
         client: currentProject.client,
         projectValue: currentProject.projectValue
@@ -251,6 +254,23 @@ export function UpdateProject({ id }: UpdateProjectProps) {
               )}
             />
           </div>
+
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Project Status</FormLabel>
+                <FormControl>
+                  <ProjectStatusDropdown
+                    status={field.value}
+                    onSelect={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           {/* Thumbnails Section */}
           <div className="space-y-3">

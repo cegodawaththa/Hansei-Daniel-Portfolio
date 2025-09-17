@@ -5,6 +5,11 @@ import { projects } from "@/database/schema/projects.schema";
 
 export const projectsSchema = createSelectSchema(projects);
 
+export const projectStatusEnum = z
+  .enum(["completed", "ongoing", "future"])
+  .nullable()
+  .optional();
+
 export type ProjectsSchemaT = z.infer<typeof projectsSchema>;
 
 // For relational queries, we need to define the experience schema separately to match drizzle's output
@@ -26,6 +31,7 @@ export const projectsWithExperiencesSchema = z
     description: z.string().nullable(),
     thumbnails: z.array(z.string()).nullable(),
     projectType: z.string().nullable(),
+    status: projectStatusEnum,
     location: z.string().nullable(),
     client: z.string().nullable(),
     projectValue: z.string().nullable(),
