@@ -25,6 +25,7 @@ import {
   insertProjectsSchema,
   InsertProjectsSchemaT
 } from "@/lib/zod/projects.zod";
+import { ProjectStatusDropdown } from "./project-status-dropdown";
 
 export function AddNewProject() {
   const router = useRouter();
@@ -39,6 +40,7 @@ export function AddNewProject() {
       description: "",
       thumbnails: [],
       projectType: "",
+      status: "completed",
       location: "",
       client: "",
       projectValue: ""
@@ -202,6 +204,23 @@ export function AddNewProject() {
               )}
             />
           </div>
+
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Project Status</FormLabel>
+                <FormControl>
+                  <ProjectStatusDropdown
+                    status={field.value}
+                    onSelect={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           {/* Thumbnails Section */}
           <div className="space-y-3">

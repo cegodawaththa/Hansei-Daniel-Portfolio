@@ -20,6 +20,7 @@ type ProjectWithExperiences = {
   description: string | null;
   thumbnails: string[] | null;
   projectType: string | null;
+  status?: "completed" | "ongoing" | "future" | null | undefined;
   location: string | null;
   client: string | null;
   projectValue: string | null;
@@ -44,6 +45,7 @@ function transformProject(project: ProjectWithExperiences) {
     description: project.description,
     thumbnails: project.thumbnails,
     projectType: project.projectType,
+    status: project.status,
     location: project.location,
     client: project.client,
     projectValue: project.projectValue,

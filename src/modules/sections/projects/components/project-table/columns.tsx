@@ -56,6 +56,18 @@ export const columns: ColumnDef<Project>[] = [
     }
   },
   {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      const projectStatus = row.getValue("status") as string;
+      return (
+        <div className="text-muted-foreground capitalize">
+          {projectStatus || "Not specified"}
+        </div>
+      );
+    }
+  },
+  {
     accessorKey: "location",
     header: "Location",
     cell: ({ row }) => {

@@ -1,8 +1,14 @@
 import { sql, relations } from "drizzle-orm";
-import { index, pgTable, text } from "drizzle-orm/pg-core";
+import { index, pgTable, text, pgEnum } from "drizzle-orm/pg-core";
 
 import { timestamps } from "@/lib/helpers";
 import { experiences } from "./experiences.schema";
+
+const projectStatusEnum = pgEnum("project_status", [
+  "completed",
+  "ongoing",
+  "future"
+]);
 
 export const projects = pgTable(
   "projects",
@@ -14,6 +20,7 @@ export const projects = pgTable(
     name: text("name").notNull(),
     description: text("description"),
     thumbnails: text("thumbnails").array(),
+    status: projectStatusEnum("status").default("completed"),
 
     projectType: text("project_type"),
     location: text("location"),
