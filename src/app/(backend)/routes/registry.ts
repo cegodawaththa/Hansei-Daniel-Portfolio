@@ -12,6 +12,7 @@ import education from "./education";
 import inquiries from "./inquiries";
 import projects from "./projects";
 import experiences from "./experiences";
+import posts from "./posts";
 
 export function registerRoutes(app: AppOpenAPI) {
   return app
@@ -23,7 +24,8 @@ export function registerRoutes(app: AppOpenAPI) {
     .route("/education", education)
     .route("/inquiries", inquiries)
     .route("/projects", projects)
-    .route("/experiences", experiences);
+    .route("/experiences", experiences)
+    .route("/posts", posts);
 }
 
 // stand alone router type used for api client

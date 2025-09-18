@@ -17,3 +17,5 @@ export * from "./projects.schema";
 export * from "./inquiries.schema";
 
 export * from "./qualifications.schema";
+
+export * from "./posts.schema";

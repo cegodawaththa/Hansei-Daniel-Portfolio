@@ -7,6 +7,7 @@ import type { QualificationsSchemaT } from "@/lib/zod/qualifications.zod";
 import type { ExperiencesWithProjectSchemaT } from "@/lib/zod/experiences.zod";
 import type { ProjectsWithExperiencesSchemaT } from "@/lib/zod/projects.zod";
 import type { EducationSchemaT } from "@/lib/zod/education.zod";
+import type { PostsSchemaT } from "@/lib/zod/posts.zod";
 
 export interface LandingPageData {
   data: {
@@ -15,6 +16,7 @@ export interface LandingPageData {
     experiences: ExperiencesWithProjectSchemaT[] | null;
     projects: ProjectsWithExperiencesSchemaT[] | null;
     education: EducationSchemaT[] | null;
+    posts: PostsSchemaT[] | null;
   } | null;
   error: string | null;
 }
@@ -29,7 +31,8 @@ export async function getLandingPageData(): Promise<LandingPageData> {
         qualifications: null,
         experiences: null,
         projects: null,
-        education: null
+        education: null,
+        posts: null
       },
       error: null
     };
@@ -125,6 +128,28 @@ export async function getLandingPageData(): Promise<LandingPageData> {
       returnData!.data!.education = education.data as any;
     } catch (educationError) {
       console.error(educationError);
+    }
+
+    // =========================================================================
+    // Posts Data (Market News)
+    try {
+      const postsRes = await rpcClient.api.posts.$get({
+        query: {
+          limit: "3",
+          sort: "desc"
+        }
+      });
+
+      if (!postsRes.ok) {
+        const errorData = await postsRes.json();
+        throw new Error(`Failed to fetch posts: ${errorData.message}`);
+      }
+
+      const posts = await postsRes.json();
+
+      returnData!.data!.posts = posts.data as any;
+    } catch (postsError) {
+      console.error(postsError);
     }
 
     return returnData;
