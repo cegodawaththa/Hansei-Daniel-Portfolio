@@ -103,14 +103,7 @@ export function MarketNewsPage() {
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12">
                   {data.data.map((post) => (
-                    <PostCard
-                      key={post.id}
-                      post={{
-                        ...post,
-                        createdAt: new Date(post.createdAt),
-                        updatedAt: new Date(post?.updatedAt || post.createdAt)
-                      }}
-                    />
+                    <PostCard key={post.id} post={post} />
                   ))}
                 </div>
 
