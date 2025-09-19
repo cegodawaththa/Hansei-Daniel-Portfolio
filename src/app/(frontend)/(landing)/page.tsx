@@ -3,7 +3,9 @@ import { getLandingPageData } from "@/modules/landing/actions/get-landing-page-d
 import HeroSection from "@/modules/landing/components/hero";
 import AboutSection from "@/modules/landing/components/about";
 import ExperienceSection from "@/modules/landing/components/experience";
-import ProjectsSection from "@/modules/landing/components/projects";
+import CompletedProjectsSection from "@/modules/landing/components/completed-projects";
+import OngoingProjectsSection from "@/modules/landing/components/ongoing-projects";
+import FutureProjectsSection from "@/modules/landing/components/future-projects";
 import EducationSection from "@/modules/landing/components/education";
 import { MarketNews } from "@/modules/landing/components/market-news";
 import ContactSection from "@/modules/landing/components/contact";
@@ -81,7 +83,9 @@ export default async function Home() {
         <HeroSection data={landingPageData} />
         <AboutSection data={landingPageData} />
         <ExperienceSection data={landingPageData} />
-        <ProjectsSection data={landingPageData} />
+        <CompletedProjectsSection data={landingPageData} maxDisplayCount={3} />
+        <OngoingProjectsSection data={landingPageData} maxDisplayCount={3} />
+        <FutureProjectsSection data={landingPageData} maxDisplayCount={3} />
         <EducationSection data={landingPageData} />
         <MarketNews posts={landingPageData.data?.posts || []} />
         {/* <TestimonialsSection /> */}

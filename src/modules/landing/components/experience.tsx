@@ -189,9 +189,7 @@ export default function ExperienceSection({ data, className }: Props) {
             My Professional Journey
           </h2>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Over two decades of expertise in real estate and construction,
-            delivering exceptional results and building lasting client
-            relationships.
+            Explore my Experience from various Development Projects
           </p>
         </div>
 

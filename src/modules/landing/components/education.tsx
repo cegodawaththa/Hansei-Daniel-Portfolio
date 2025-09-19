@@ -16,7 +16,14 @@ type Props = {
 export default function EducationSection({ data, className }: Props) {
   if (!data.data || !data.data.education) return <></>;
 
-  const educationData = data.data.education;
+  // Sort education data to match the listing table order (by priorityIndex) and reverse to match table display
+  const educationData = [...data.data.education]
+    .sort((a, b) => {
+      const aPriority = a.priorityIndex ?? 999;
+      const bPriority = b.priorityIndex ?? 999;
+      return aPriority - bPriority;
+    })
+    .reverse(); // Reverse to match the table order
 
   const timelineData: TimelineElement[] = educationData.map((item, index) => ({
     id: index,
@@ -84,7 +91,7 @@ export default function EducationSection({ data, className }: Props) {
             Educational Background
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-foreground">
-            Academic <span className="text-accent">Qualifications</span>
+            My <span className="text-accent">Credentials</span>
           </h2>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             A comprehensive overview of my educational journey and academic
