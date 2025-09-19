@@ -47,7 +47,7 @@ const data = {
       icon: IconList
     },
     {
-      title: "Core Qualifications",
+      title: "Credentials",
       url: "/dashboard/core-qualifications",
       icon: IconRosette
     },
