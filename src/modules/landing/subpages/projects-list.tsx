@@ -1,12 +1,16 @@
 import React from "react";
 import { LandingPageData } from "../actions/get-landing-page-data";
+import CompletedProjectsSection from "../components/completed-projects";
+import OngoingProjectsSection from "../components/ongoing-projects";
+import FutureProjectsSection from "../components/future-projects";
 import { ProjectCard } from "../components/projects";
 
 type Props = {
   data: LandingPageData;
+  statusFilter?: string;
 };
 
-export function ProjectsList({ data }: Props) {
+export function ProjectsList({ data, statusFilter }: Props) {
   if (!data.data || !data.data.projects || data.data.projects.length < 1)
     return (
       <div className="flex items-center justify-center w-full min-h-[40vh]">
@@ -22,6 +26,33 @@ export function ProjectsList({ data }: Props) {
       </div>
     );
 
+  // If statusFilter is provided, show only that specific status section
+  if (statusFilter && statusFilter !== "all") {
+    switch (statusFilter) {
+      case "completed":
+        return <CompletedProjectsSection data={data} />;
+      case "ongoing":
+        return <OngoingProjectsSection data={data} />;
+      case "future":
+        return <FutureProjectsSection data={data} />;
+      default:
+        // Invalid status filter, show all projects in grid
+        break;
+    }
+  }
+
+  // Show all sections when no filter or "all" filter is applied
+  if (!statusFilter || statusFilter === "all") {
+    return (
+      <div className="space-y-0">
+        <CompletedProjectsSection data={data} />
+        <OngoingProjectsSection data={data} />
+        <FutureProjectsSection data={data} />
+      </div>
+    );
+  }
+
+  // Fallback: show all projects in a grid (for any other case)
   const projects = data.data.projects;
 
   return (
