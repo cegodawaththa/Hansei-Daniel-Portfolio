@@ -477,7 +477,7 @@ export default function ProjectsSection({ data, className }: Props) {
               Featured Projects
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-foreground">
-              Our Portfolio
+              Projects
             </h2>
             <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
               Discover our exceptional real estate and construction projects
