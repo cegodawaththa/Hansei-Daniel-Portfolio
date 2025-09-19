@@ -18,6 +18,7 @@ const navLinks = [
   { name: "Home", href: "/" },
   { name: "Projects", href: "/projects" },
   { name: "Experience", href: "/experience" },
+  { name: "Market News", href: "/market-news" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" }
 ];
@@ -90,14 +91,15 @@ export function NavigationBar({ className }: Props) {
                   className={cn(
                     "group relative h-20 flex items-center px-2 text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-300",
                     {
-                      "text-gray-600": isScrolled
+                      "text-gray-600 hover:text-teal-700": isScrolled
                     }
                   )}
                 >
                   <span
                     className={cn("text-sm lg:text-base font-medium", {
                       "text-white": pathname === link.href,
-                      "text-primary": pathname === link.href && isScrolled
+                      "text-primary hover:text-teal-600":
+                        pathname === link.href && isScrolled
                     })}
                   >
                     {link.name}

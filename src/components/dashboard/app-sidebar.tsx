@@ -10,7 +10,8 @@ import {
   IconRosette,
   IconBuildings,
   IconPennant,
-  IconBooks
+  IconBooks,
+  IconNews
 } from "@tabler/icons-react";
 import * as React from "react";
 
@@ -69,6 +70,11 @@ const data = {
       title: "Experiences",
       url: "/dashboard/experiences",
       icon: IconPennant
+    },
+    {
+      title: "Market News",
+      url: "/dashboard/posts",
+      icon: IconNews
     }
   ],
   navSecondary: [

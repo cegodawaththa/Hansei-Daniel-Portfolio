@@ -50,6 +50,13 @@
       "when": 1758128308916,
       "tag": "0006_condemned_malcolm_colcord",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1758199305753,
+      "tag": "0007_great_eddie_brock",
+      "breakpoints": true
     }
   ]
 }

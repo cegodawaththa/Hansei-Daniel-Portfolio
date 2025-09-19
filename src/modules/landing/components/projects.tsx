@@ -485,6 +485,37 @@ export default function ProjectsSection({ data, className }: Props) {
             </p>
           </div>
 
+          <div className="my-3 w-full flex items-center justify-center gap-3">
+            <Button
+              variant={statusFilter === "all" ? "default" : "outline"}
+              className="cursor-pointer"
+              onClick={() => setStatusFilter("all")}
+            >
+              All
+            </Button>
+            <Button
+              variant={statusFilter === "completed" ? "default" : "outline"}
+              className="cursor-pointer"
+              onClick={() => setStatusFilter("completed")}
+            >
+              Completed Projects
+            </Button>
+            <Button
+              variant={statusFilter === "ongoing" ? "default" : "outline"}
+              className="cursor-pointer"
+              onClick={() => setStatusFilter("ongoing")}
+            >
+              Under Construction
+            </Button>
+            <Button
+              variant={statusFilter === "future" ? "default" : "outline"}
+              className="cursor-pointer"
+              onClick={() => setStatusFilter("future")}
+            >
+              Upcoming
+            </Button>
+          </div>
+
           <div className="text-center py-20 bg-gray-100 dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700">
             <Building2 className="w-16 h-16 mx-auto text-gray-400 dark:text-gray-600 mb-4" />
             <p className="text-gray-600 dark:text-gray-400">

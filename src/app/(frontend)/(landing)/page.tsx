@@ -5,6 +5,7 @@ import AboutSection from "@/modules/landing/components/about";
 import ExperienceSection from "@/modules/landing/components/experience";
 import ProjectsSection from "@/modules/landing/components/projects";
 import EducationSection from "@/modules/landing/components/education";
+import { MarketNews } from "@/modules/landing/components/market-news";
 import ContactSection from "@/modules/landing/components/contact";
 import {
   generateMetadata as genMetadata,
@@ -82,6 +83,7 @@ export default async function Home() {
         <ExperienceSection data={landingPageData} />
         <ProjectsSection data={landingPageData} />
         <EducationSection data={landingPageData} />
+        <MarketNews posts={landingPageData.data?.posts || []} />
         {/* <TestimonialsSection /> */}
         <ContactSection data={landingPageData} />
       </div>
