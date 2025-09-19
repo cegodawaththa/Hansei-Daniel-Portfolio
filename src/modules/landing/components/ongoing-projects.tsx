@@ -18,7 +18,7 @@ export default function OngoingProjectsSection({
       data={data}
       className={className}
       status="ongoing"
-      title="Ongoing Projects"
+      title="Under Construction"
       subtitle="Current projects in development, showcasing our active involvement in shaping the real estate landscape."
       maxDisplayCount={maxDisplayCount}
     />
