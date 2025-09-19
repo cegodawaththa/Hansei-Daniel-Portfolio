@@ -16,7 +16,14 @@ type Props = {
 export default function EducationSection({ data, className }: Props) {
   if (!data.data || !data.data.education) return <></>;
 
-  const educationData = data.data.education;
+  // Sort education data to match the listing table order (by priorityIndex) and reverse to match table display
+  const educationData = [...data.data.education]
+    .sort((a, b) => {
+      const aPriority = a.priorityIndex ?? 999;
+      const bPriority = b.priorityIndex ?? 999;
+      return aPriority - bPriority;
+    })
+    .reverse(); // Reverse to match the table order
 
   const timelineData: TimelineElement[] = educationData.map((item, index) => ({
     id: index,

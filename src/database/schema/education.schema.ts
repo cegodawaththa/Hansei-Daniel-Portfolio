@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { index, pgTable, text } from "drizzle-orm/pg-core";
+import { index, pgTable, text, integer } from "drizzle-orm/pg-core";
 
 import { timestamps } from "@/lib/helpers";
 
@@ -12,6 +12,8 @@ export const education = pgTable(
     title: text("title").notNull(),
     institution: text("institution"),
     year: text("year"),
+
+    priorityIndex: integer("priority_index").default(1),
 
     ...timestamps
   },

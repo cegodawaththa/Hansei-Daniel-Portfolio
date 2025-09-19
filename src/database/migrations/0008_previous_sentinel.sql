@@ -1,0 +1,1 @@
+ALTER TABLE "education" ADD COLUMN "priority_index" integer DEFAULT 1;

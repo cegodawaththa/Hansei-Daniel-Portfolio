@@ -6,14 +6,13 @@ interface FilterParams {
   page?: number;
   limit?: number;
   search?: string | null;
-  sort?: "asc" | "desc";
 }
 
 export const useGetEducations = (params: FilterParams) => {
-  const { page = 1, limit = 10, search = "", sort = "desc" } = params;
+  const { page = 1, limit = 10, search = "" } = params;
 
   const query = useQuery({
-    queryKey: ["educations", { page, limit, search, sort }],
+    queryKey: ["educations", { page, limit, search }],
     queryFn: async () => {
       const rpcClient = await getClient();
 
@@ -21,8 +20,7 @@ export const useGetEducations = (params: FilterParams) => {
         query: {
           page: page.toString(),
           limit: limit.toString(),
-          ...(search && { search }),
-          sort
+          ...(search && { search })
         }
       });
 

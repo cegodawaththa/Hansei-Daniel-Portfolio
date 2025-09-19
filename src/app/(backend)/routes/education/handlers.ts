@@ -10,17 +10,14 @@ import type {
   GetByIdRoute,
   CreateRoute,
   UpdateRoute,
-  RemoveRoute
+  RemoveRoute,
+  ReorderRoute
 } from "./routes";
 
 // List education route handler (no authentication required)
 export const list: AppRouteHandler<ListRoute> = async (c) => {
-  const {
-    page = "1",
-    limit = "10",
-    sort = "desc",
-    search
-  } = c.req.valid("query");
+  console.log("List handler called");
+  const { page = "1", limit = "10", search } = c.req.valid("query");
 
   // Convert to numbers and validate
   const pageNum = Math.max(1, parseInt(page));
@@ -42,11 +39,8 @@ export const list: AppRouteHandler<ListRoute> = async (c) => {
       offset,
       where: searchCondition,
       orderBy: (fields) => {
-        // Handle sorting direction
-        if (sort.toLowerCase() === "asc") {
-          return fields.createdAt;
-        }
-        return desc(fields.createdAt);
+        // Always sort by priorityIndex first (ascending for proper order)
+        return [fields.priorityIndex, desc(fields.createdAt)];
       }
     });
 
@@ -88,6 +82,7 @@ export const list: AppRouteHandler<ListRoute> = async (c) => {
 
 // Get education by ID handler (no authentication required)
 export const getById: AppRouteHandler<GetByIdRoute> = async (c) => {
+  console.log("GetById handler called with params:", c.req.param());
   const params = c.req.valid("param");
 
   try {
@@ -125,18 +120,35 @@ export const create: AppRouteHandler<CreateRoute> = async (c) => {
     );
   }
 
-  const [inserted] = await db.insert(education).values(body).returning();
+  try {
+    // Get the highest priorityIndex to set the new item at the end
+    const highestPriority = await db
+      .select({ maxPriority: sql<number>`MAX(${education.priorityIndex})` })
+      .from(education);
 
-  if (!inserted) {
+    const nextPriorityIndex = (highestPriority[0]?.maxPriority || 0) + 1;
+
+    const [inserted] = await db
+      .insert(education)
+      .values({ ...body, priorityIndex: nextPriorityIndex })
+      .returning();
+
+    if (!inserted) {
+      return c.json(
+        {
+          message: "Education not created"
+        },
+        HttpStatusCodes.BAD_REQUEST
+      );
+    }
+
+    return c.json(inserted, HttpStatusCodes.CREATED);
+  } catch {
     return c.json(
-      {
-        message: "Education not created"
-      },
-      HttpStatusCodes.BAD_REQUEST
+      { message: HttpStatusPhrases.INTERNAL_SERVER_ERROR },
+      HttpStatusCodes.INTERNAL_SERVER_ERROR
     );
   }
-
-  return c.json(inserted, HttpStatusCodes.CREATED);
 };
 
 // Update education handler
@@ -200,4 +212,45 @@ export const remove: AppRouteHandler<RemoveRoute> = async (c) => {
     { message: "Education deleted successfully" },
     HttpStatusCodes.OK
   );
+};
+
+// Reorder education handler
+export const reorder: AppRouteHandler<ReorderRoute> = async (c) => {
+  console.log("Reorder handler called");
+
+  const session = c.get("session");
+  const body = c.req.valid("json");
+
+  if (!session) {
+    return c.json(
+      {
+        message: HttpStatusPhrases.UNAUTHORIZED
+      },
+      HttpStatusCodes.UNAUTHORIZED
+    );
+  }
+
+  try {
+    // Batch update all priority indices
+    const updates = body.items.map((item) =>
+      db
+        .update(education)
+        .set({ priorityIndex: item.priorityIndex, updatedAt: new Date() })
+        .where(eq(education.id, item.id))
+    );
+
+    console.log({ updates });
+
+    await Promise.all(updates);
+
+    return c.json(
+      { message: "Education items reordered successfully" },
+      HttpStatusCodes.OK
+    );
+  } catch {
+    return c.json(
+      { message: "Failed to reorder education items" },
+      HttpStatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
 };

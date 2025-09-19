@@ -57,6 +57,13 @@
       "when": 1758199305753,
       "tag": "0007_great_eddie_brock",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1758287421699,
+      "tag": "0008_previous_sentinel",
+      "breakpoints": true
     }
   ]
 }
