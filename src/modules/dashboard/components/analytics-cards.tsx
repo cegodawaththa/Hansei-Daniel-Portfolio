@@ -66,9 +66,9 @@ function AnalyticsCard({
         <div className="flex flex-col items-end space-y-2">
           {/* Icon with colored background */}
           <div className="p-2.5 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 text-primary group-hover:from-primary/20 group-hover:to-primary/10 transition-all duration-300">
-            {React.cloneElement(icon as React.ReactElement, {
-              className: "h-5 w-5"
-            })}
+            <div className="h-5 w-5 flex items-center justify-center">
+              {icon}
+            </div>
           </div>
 
           {trend && (
