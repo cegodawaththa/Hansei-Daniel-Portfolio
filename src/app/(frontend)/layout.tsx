@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
+import { Toaster } from "sonner";
+
 import "./globals.css";
 import { fontSans, fontHeading, fontGreatVibes } from "@/lib/fonts";
-import { Toaster } from "sonner";
 import { Providers } from "@/components/providers";
 import { generateMetadata as genMetadata } from "@/lib/utils/metadata";
 
@@ -21,6 +23,7 @@ export default function RootLayout({
           {children}
           <Toaster position="bottom-left" />
         </Providers>
+        <Analytics />;
       </body>
     </html>
   );
