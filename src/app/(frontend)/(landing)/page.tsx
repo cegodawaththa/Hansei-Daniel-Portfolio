@@ -2,10 +2,6 @@ import { Metadata } from "next";
 import { getLandingPageData } from "@/modules/landing/actions/get-landing-page-data";
 import HeroSection from "@/modules/landing/components/hero";
 import AboutSection from "@/modules/landing/components/about";
-import ExperienceSection from "@/modules/landing/components/experience";
-import CompletedProjectsSection from "@/modules/landing/components/completed-projects";
-import OngoingProjectsSection from "@/modules/landing/components/ongoing-projects";
-import FutureProjectsSection from "@/modules/landing/components/future-projects";
 import EducationSection from "@/modules/landing/components/education";
 import { MarketNews } from "@/modules/landing/components/market-news";
 import ContactSection from "@/modules/landing/components/contact";
@@ -13,6 +9,7 @@ import {
   generateMetadata as genMetadata,
   generateStructuredData
 } from "@/lib/utils/metadata";
+import { DevelopmentsSection } from "@/modules/landing/components/developments-section";
 
 export const metadata: Metadata = genMetadata({
   title:
@@ -82,14 +79,13 @@ export default async function Home() {
       <div className="">
         <HeroSection data={landingPageData} />
         <AboutSection data={landingPageData} />
-        <ExperienceSection data={landingPageData} />
-        <CompletedProjectsSection data={landingPageData} maxDisplayCount={3} />
-        <OngoingProjectsSection data={landingPageData} maxDisplayCount={3} />
-        <FutureProjectsSection data={landingPageData} maxDisplayCount={3} />
+        <DevelopmentsSection data={landingPageData} />
         <EducationSection data={landingPageData} />
         <MarketNews posts={landingPageData.data?.posts || []} />
-        {/* <TestimonialsSection /> */}
         <ContactSection data={landingPageData} />
+
+        {/* <ExperienceSection data={landingPageData} /> */}
+        {/* <TestimonialsSection /> */}
       </div>
     </>
   );

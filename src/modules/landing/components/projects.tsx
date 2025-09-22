@@ -27,24 +27,30 @@ type Props = {
 };
 
 // Project Details Dialog Component
-function ProjectDetailsDialog({
-  project
+export function ProjectDetailsDialog({
+  project,
+  trigger
 }: {
   project: ProjectsWithExperiencesSchemaT;
+  trigger?: React.ReactNode;
 }) {
   const projectImage = project.thumbnails?.[0] || "/assets/images/hero_1.jpg";
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          className="w-full group/btn border-gray-200 dark:border-gray-700 hover:bg-accent hover:text-white hover:border-accent transition-all duration-300 text-sm"
-        >
-          <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-          View Project Details
-          <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-2 transition-transform duration-300 group-hover/btn:translate-x-1" />
-        </Button>
+        {!trigger ? (
+          <Button
+            variant="outline"
+            className="w-full group/btn border-gray-200 dark:border-gray-700 hover:bg-accent hover:text-white hover:border-accent transition-all duration-300 text-sm"
+          >
+            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+            View Project Details
+            <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-2 transition-transform duration-300 group-hover/btn:translate-x-1" />
+          </Button>
+        ) : (
+          trigger
+        )}
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[90vh] p-0 overflow-hidden">
         <ScrollArea className="h-full max-h-[90vh]">

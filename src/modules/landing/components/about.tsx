@@ -40,7 +40,7 @@ export default function AboutSection({
                 About Me
               </div>
               <h2 className="text-4xl lg:text-5xl font-heading font-bold text-foreground">
-                Results Producing Management Executive
+                Management Executive
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 {basicInfo?.fullBio}
