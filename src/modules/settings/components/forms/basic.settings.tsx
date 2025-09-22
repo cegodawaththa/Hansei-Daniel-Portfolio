@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CheckIcon } from "lucide-react";
 
 import { Card } from "@/components/ui/card";
 import {
@@ -14,13 +15,12 @@ import {
   FormDescription
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { CheckIcon } from "lucide-react";
 
 import { useSettingsStore } from "../../store";
 import { useUpdateSettings } from "../../queries/use-update-settings";
 import { CvUploader } from "../cv-uploader";
+import { RichTextEditor } from "@/components/ui/rich-text-editor";
 
 const basicSettingsSchema = z.object({
   // Basic Information
@@ -95,9 +95,17 @@ export function BasicSettingsForm() {
                 <FormItem>
                   <FormLabel>Short Description</FormLabel>
                   <FormControl>
-                    <Textarea
+                    {/* <Textarea
                       placeholder="A brief description of your portfolio"
                       {...field}
+                    /> */}
+
+                    <RichTextEditor
+                      content={field.value}
+                      onChange={field.onChange}
+                      placeholder="Write your short description here..."
+                      disabled={isPending}
+                      className="min-h-[90px]"
                     />
                   </FormControl>
                   <FormDescription>
@@ -115,10 +123,12 @@ export function BasicSettingsForm() {
                 <FormItem>
                   <FormLabel>Full Bio</FormLabel>
                   <FormControl>
-                    <Textarea
-                      className="min-h-36"
-                      placeholder="Tell us about yourself"
-                      {...field}
+                    <RichTextEditor
+                      content={field.value}
+                      onChange={field.onChange}
+                      placeholder="Write your full bio here..."
+                      disabled={isPending}
+                      className="min-h-[200px]"
                     />
                   </FormControl>
                   <FormDescription>

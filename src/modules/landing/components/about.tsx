@@ -42,9 +42,18 @@ export default function AboutSection({
               <h2 className="text-4xl lg:text-5xl font-heading font-bold text-foreground">
                 Management Executive
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              {/* <p className="text-lg text-muted-foreground leading-relaxed">
                 {basicInfo?.fullBio}
-              </p>
+              </p> */}
+
+              {basicInfo?.fullBio && (
+                <div
+                  className="prose prose-lg max-w-none prose-headings:text-muted-foreground prose-p:text-muted-foreground prose-strong:text-muted-foreground prose-ul:text-muted-foreground prose-ol:text-muted-foreground prose-li:text-muted-foreground prose-blockquote:text-muted-foreground prose-blockquote:border-border prose-a:text-primary prose-code:text-muted-foreground prose-pre:bg-muted text-muted-foreground/90"
+                  dangerouslySetInnerHTML={{
+                    __html: basicInfo.fullBio
+                  }}
+                />
+              )}
             </div>
 
             <div className="space-y-6">
