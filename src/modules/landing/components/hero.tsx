@@ -54,9 +54,19 @@ export default function HeroSection({ className, data }: Props) {
                     <h2 className="text-xl md:text-2xl lg:text-3xl capitalize italic font-heading font-medium text-primary-foreground/90">
                       {`"Invest in yourself is the best Return on Investment"`}
                     </h2>
-                    <p className="text-lg md:text-xl font-light text-primary-foreground/80 max-w-2xl mx-auto lg:mx-0">
+
+                    {/* <p className="text-lg md:text-xl font-light text-primary-foreground/80 max-w-2xl mx-auto lg:mx-0">
                       {basicInfo.shortDescription}
-                    </p>
+                    </p> */}
+
+                    {basicInfo.shortDescription && (
+                      <div
+                        className="prose prose-lg max-w-none prose-headings:text-primary-foreground prose-p:text-primary-foreground prose-strong:text-primary-foreground prose-ul:text-primary-foreground prose-ol:text-primary-foreground prose-li:text-primary-foreground prose-blockquote:text-primary-foreground prose-blockquote:border-border prose-a:text-primary prose-code:text-primary-foreground prose-pre:bg-muted text-primary-foreground/90"
+                        dangerouslySetInnerHTML={{
+                          __html: basicInfo.shortDescription
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
 

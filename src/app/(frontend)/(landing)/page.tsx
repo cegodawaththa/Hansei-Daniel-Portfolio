@@ -2,8 +2,6 @@ import { Metadata } from "next";
 import { getLandingPageData } from "@/modules/landing/actions/get-landing-page-data";
 import HeroSection from "@/modules/landing/components/hero";
 import AboutSection from "@/modules/landing/components/about";
-import ExperienceSection from "@/modules/landing/components/experience";
-import ProjectsSection from "@/modules/landing/components/projects";
 import EducationSection from "@/modules/landing/components/education";
 import { MarketNews } from "@/modules/landing/components/market-news";
 import ContactSection from "@/modules/landing/components/contact";
@@ -11,6 +9,7 @@ import {
   generateMetadata as genMetadata,
   generateStructuredData
 } from "@/lib/utils/metadata";
+import { DevelopmentsSection } from "@/modules/landing/components/developments-section";
 
 export const metadata: Metadata = genMetadata({
   title:
@@ -80,12 +79,13 @@ export default async function Home() {
       <div className="">
         <HeroSection data={landingPageData} />
         <AboutSection data={landingPageData} />
-        <ExperienceSection data={landingPageData} />
-        <ProjectsSection data={landingPageData} />
+        <DevelopmentsSection data={landingPageData} />
         <EducationSection data={landingPageData} />
         <MarketNews posts={landingPageData.data?.posts || []} />
-        {/* <TestimonialsSection /> */}
         <ContactSection data={landingPageData} />
+
+        {/* <ExperienceSection data={landingPageData} /> */}
+        {/* <TestimonialsSection /> */}
       </div>
     </>
   );

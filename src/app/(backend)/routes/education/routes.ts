@@ -9,6 +9,16 @@ import {
   queryParamsSchema,
   stringIdParamSchema
 } from "@/lib/server/helpers";
+
+// Schema for reordering education items
+const reorderEducationSchema = z.object({
+  items: z.array(
+    z.object({
+      id: z.string(),
+      priorityIndex: z.number().int().min(0)
+    })
+  )
+});
 import {
   educationSchema,
   insertEducationSchema,
@@ -81,6 +91,10 @@ export const create = createRoute({
     [HttpStatusCodes.BAD_REQUEST]: jsonContent(
       errorMessageSchema,
       "Bad request"
+    ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      errorMessageSchema,
+      "Something went wrong"
     )
   }
 });
@@ -133,9 +147,35 @@ export const remove = createRoute({
   }
 });
 
+// Reorder education route definition
+export const reorder = createRoute({
+  tags,
+  summary: "Reorder education items",
+  method: "patch",
+  path: "/reorder",
+  request: {
+    body: jsonContentRequired(reorderEducationSchema, "Reorder education items")
+  },
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(
+      z.object({ message: z.string() }),
+      "Education items reordered successfully"
+    ),
+    [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
+      errorMessageSchema,
+      "Unauthorized access"
+    ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      errorMessageSchema,
+      "Failed to reorder education items"
+    )
+  }
+});
+
 // Export types
 export type ListRoute = typeof list;
 export type GetByIdRoute = typeof getById;
 export type CreateRoute = typeof create;
 export type UpdateRoute = typeof update;
 export type RemoveRoute = typeof remove;
+export type ReorderRoute = typeof reorder;

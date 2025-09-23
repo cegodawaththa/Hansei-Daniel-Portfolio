@@ -22,18 +22,12 @@ export function useEducationTableFilters() {
     searchParams.limit.withDefault(10)
   );
 
-  const [sort, setSort] = useQueryState(
-    "sort",
-    searchParams.sort.withDefault("desc")
-  );
-
   const resetFilters = () => {
     setSearchQuery("");
     setPage(1);
-    setSort("desc");
   };
 
-  const isAnyFilterActive = searchQuery !== "" || sort !== "desc";
+  const isAnyFilterActive = searchQuery !== "";
 
   return {
     // Search
@@ -45,10 +39,6 @@ export function useEducationTableFilters() {
     setPage,
     limit,
     setLimit,
-
-    // Sort
-    sort,
-    setSort,
 
     // Reset
     resetFilters,
