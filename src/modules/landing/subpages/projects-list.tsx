@@ -1,13 +1,16 @@
 import React from "react";
 import { LandingPageData } from "../actions/get-landing-page-data";
 import { ProjectCard } from "../components/projects";
+import { ProjectsWithExperiencesSchemaT } from "@/lib/zod/projects.zod";
+
+type ProjectStatus = "completed" | "ongoing" | "future";
 
 type Props = {
   data: LandingPageData;
-  statusFilter?: string;
+  statusFilter?: ProjectStatus | ProjectStatus[] | undefined;
 };
 
-export function ProjectsList({ data }: Props) {
+export function ProjectsList({ data, statusFilter }: Props) {
   if (!data.data || !data.data.projects || data.data.projects.length < 1)
     return (
       <div className="flex items-center justify-center w-full min-h-[40vh]">
@@ -23,7 +26,17 @@ export function ProjectsList({ data }: Props) {
       </div>
     );
 
-  const projects = data.data.projects;
+  let projects: ProjectsWithExperiencesSchemaT[] = [];
+
+  if (statusFilter) {
+    const statusArray = Array.isArray(statusFilter)
+      ? statusFilter
+      : [statusFilter];
+
+    projects = data.data.projects.filter((project) =>
+      statusArray.includes(project.status as ProjectStatus)
+    );
+  } else projects = data.data.projects;
 
   return (
     <div className="content-container mt-8">
