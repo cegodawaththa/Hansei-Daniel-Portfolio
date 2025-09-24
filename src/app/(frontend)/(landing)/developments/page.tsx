@@ -6,7 +6,7 @@ import { ProjectsList } from "@/modules/landing/subpages/projects-list";
 import { generateMetadata as genMetadata } from "@/lib/utils/metadata";
 
 export const metadata: Metadata = genMetadata({
-  title: "Hansie Daniel's Projects",
+  title: "Hansie Daniel's Developments",
   description:
     "Explore Hansie Daniel's comprehensive portfolio of real estate and construction projects. From residential developments to commercial properties, discover successful project completions and innovative construction management solutions delivered on time and within budget.",
   keywords: [
@@ -32,12 +32,15 @@ export default async function ProjectsPage({}: Props) {
   return (
     <div className="">
       <PageHeader
-        title={"Projects"}
-        subtitle={"Discover projects I have handled."}
+        title={"Developments"}
+        subtitle={"Discover latest project developments I'm handling."}
       />
 
       <div className="min-h-[40vh]">
-        <ProjectsList data={landingPageData} statusFilter={["completed"]} />
+        <ProjectsList
+          data={landingPageData}
+          statusFilter={["future", "ongoing"]}
+        />
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ type Props = {
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Projects", href: "/projects" },
-  // { name: "Experience", href: "/experience" },
+  { name: "Developments", href: "/developments" },
   { name: "Market News", href: "/market-news" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" }
