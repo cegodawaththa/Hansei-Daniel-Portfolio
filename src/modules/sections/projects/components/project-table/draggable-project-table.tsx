@@ -110,22 +110,6 @@ function DraggableRow({ project }: DraggableRowProps) {
       <td className="p-4 text-muted-foreground">
         {project.client || "Not specified"}
       </td>
-      <td className="p-4 text-muted-foreground max-w-[300px] truncate">
-        {project.description ? (
-          <div
-            dangerouslySetInnerHTML={{
-              __html:
-                project.description.replace(/<[^>]*>/g, "").substring(0, 100) +
-                "..."
-            }}
-          />
-        ) : (
-          "No description"
-        )}
-      </td>
-      <td className="p-4 text-muted-foreground">
-        {new Date(project.createdAt).toLocaleDateString()}
-      </td>
       <td className="p-4">
         <CellAction data={project} />
       </td>
@@ -183,33 +167,47 @@ export function DraggableProjectTable({ data }: DraggableProjectTableProps) {
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
       >
-        <div className="border rounded-lg overflow-hidden">
-          <table className="w-full">
-            <thead className="bg-muted/50">
-              <tr>
-                <th className="w-12 p-2"></th>
-                <th className="text-left p-4 font-medium">Thumbnail</th>
-                <th className="text-left p-4 font-medium">Project Name</th>
-                <th className="text-left p-4 font-medium">Type</th>
-                <th className="text-left p-4 font-medium">Status</th>
-                <th className="text-left p-4 font-medium">Location</th>
-                <th className="text-left p-4 font-medium">Client</th>
-                <th className="text-left p-4 font-medium">Description</th>
-                <th className="text-left p-4 font-medium">Created At</th>
-                <th className="text-left p-4 font-medium">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <SortableContext
-                items={items}
-                strategy={verticalListSortingStrategy}
-              >
-                {items.map((project) => (
-                  <DraggableRow key={project.id} project={project} />
-                ))}
-              </SortableContext>
-            </tbody>
-          </table>
+        <div className="w-full overflow-x-auto">
+          <div className="border rounded-lg overflow-hidden min-w-[800px]">
+            <table className="w-full">
+              <thead className="bg-muted/50">
+                <tr>
+                  <th className="w-12 p-2"></th>
+                  <th className="text-left p-4 font-medium min-w-[80px]">
+                    Thumbnail
+                  </th>
+                  <th className="text-left p-4 font-medium min-w-[200px]">
+                    Project Name
+                  </th>
+                  <th className="text-left p-4 font-medium min-w-[120px]">
+                    Type
+                  </th>
+                  <th className="text-left p-4 font-medium min-w-[100px]">
+                    Status
+                  </th>
+                  <th className="text-left p-4 font-medium min-w-[120px]">
+                    Location
+                  </th>
+                  <th className="text-left p-4 font-medium min-w-[120px]">
+                    Client
+                  </th>
+                  <th className="text-left p-4 font-medium min-w-[100px]">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <SortableContext
+                  items={items}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {items.map((project) => (
+                    <DraggableRow key={project.id} project={project} />
+                  ))}
+                </SortableContext>
+              </tbody>
+            </table>
+          </div>
         </div>
       </DndContext>
       {isPending && (
