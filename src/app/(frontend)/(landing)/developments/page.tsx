@@ -33,7 +33,7 @@ export default async function ProjectsPage({}: Props) {
     <div className="">
       <PageHeader
         title={"Developments"}
-        subtitle={"Discover latest project developments I'm handling."}
+        subtitle={"Discover latest project developments in the market"}
       />
 
       <div className="min-h-[40vh]">
