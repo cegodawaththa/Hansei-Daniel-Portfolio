@@ -65,12 +65,7 @@ function transformProject(project: ProjectWithExperiences) {
 
 // List projects route handler (no authentication required)
 export const list: AppRouteHandler<ListRoute> = async (c) => {
-  const {
-    page = "1",
-    limit = "10",
-    sort = "desc",
-    search
-  } = c.req.valid("query");
+  const { page = "1", limit = "10", search } = c.req.valid("query");
 
   // Convert to numbers and validate
   const pageNum = Math.max(1, parseInt(page));
@@ -98,11 +93,8 @@ export const list: AppRouteHandler<ListRoute> = async (c) => {
         experiences: true
       },
       orderBy: (fields) => {
-        // Handle sorting direction
-        if (sort.toLowerCase() === "asc") {
-          return fields.createdAt;
-        }
-        return desc(fields.createdAt);
+        // Always sort by priorityIndex first (ascending for proper order)
+        return [fields.orderIndex, desc(fields.createdAt)];
       }
     });
 
