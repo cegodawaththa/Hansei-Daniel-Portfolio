@@ -9,6 +9,16 @@ import {
   queryParamsSchema,
   stringIdParamSchema
 } from "@/lib/server/helpers";
+
+// Schema for reordering project items
+const reorderProjectSchema = z.object({
+  items: z.array(
+    z.object({
+      id: z.string(),
+      orderIndex: z.number().int().min(0)
+    })
+  )
+});
 import {
   projectsWithExperiencesSchema,
   insertProjectsSchema,
@@ -147,9 +157,35 @@ export const remove = createRoute({
   }
 });
 
+// Reorder projects route definition
+export const reorder = createRoute({
+  tags,
+  summary: "Reorder project items",
+  method: "patch",
+  path: "/reorder",
+  request: {
+    body: jsonContentRequired(reorderProjectSchema, "Reorder project items")
+  },
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(
+      z.object({ message: z.string() }),
+      "Project items reordered successfully"
+    ),
+    [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
+      errorMessageSchema,
+      "Unauthorized access"
+    ),
+    [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
+      errorMessageSchema,
+      "Failed to reorder project items"
+    )
+  }
+});
+
 // Export types
 export type ListRoute = typeof list;
 export type GetByIdRoute = typeof getById;
 export type CreateRoute = typeof create;
 export type UpdateRoute = typeof update;
 export type RemoveRoute = typeof remove;
+export type ReorderRoute = typeof reorder;

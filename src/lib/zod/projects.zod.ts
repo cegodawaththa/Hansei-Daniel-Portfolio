@@ -35,6 +35,7 @@ export const projectsWithExperiencesSchema = z
     location: z.string().nullable(),
     client: z.string().nullable(),
     projectValue: z.string().nullable(),
+    orderIndex: z.number().nullable(),
     createdAt: z.string(), // API returns string dates
     updatedAt: z.string().nullable()
   })
