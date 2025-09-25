@@ -10,7 +10,8 @@ import type {
   GetByIdRoute,
   CreateRoute,
   UpdateRoute,
-  RemoveRoute
+  RemoveRoute,
+  ReorderRoute
 } from "./routes";
 
 // Type helpers for the relational data
@@ -24,6 +25,7 @@ type ProjectWithExperiences = {
   location: string | null;
   client: string | null;
   projectValue: string | null;
+  orderIndex: number | null;
   createdAt: Date;
   updatedAt: Date | null;
   experiences: {
@@ -49,6 +51,7 @@ function transformProject(project: ProjectWithExperiences) {
     location: project.location,
     client: project.client,
     projectValue: project.projectValue,
+    orderIndex: project.orderIndex,
     createdAt: project.createdAt.toISOString(),
     updatedAt: project.updatedAt?.toISOString() || null,
     experiences: project.experiences.map((exp) => ({
@@ -65,12 +68,7 @@ function transformProject(project: ProjectWithExperiences) {
 
 // List projects route handler (no authentication required)
 export const list: AppRouteHandler<ListRoute> = async (c) => {
-  const {
-    page = "1",
-    limit = "10",
-    sort = "desc",
-    search
-  } = c.req.valid("query");
+  const { page = "1", limit = "10", search } = c.req.valid("query");
 
   // Convert to numbers and validate
   const pageNum = Math.max(1, parseInt(page));
@@ -98,11 +96,8 @@ export const list: AppRouteHandler<ListRoute> = async (c) => {
         experiences: true
       },
       orderBy: (fields) => {
-        // Handle sorting direction
-        if (sort.toLowerCase() === "asc") {
-          return fields.createdAt;
-        }
-        return desc(fields.createdAt);
+        // Always sort by priorityIndex first (ascending for proper order)
+        return [fields.orderIndex, desc(fields.createdAt)];
       }
     });
 
@@ -314,4 +309,45 @@ export const remove: AppRouteHandler<RemoveRoute> = async (c) => {
     { message: "Project deleted successfully" },
     HttpStatusCodes.OK
   );
+};
+
+// Reorder projects handler
+export const reorder: AppRouteHandler<ReorderRoute> = async (c) => {
+  console.log("Reorder projects handler called");
+
+  const session = c.get("session");
+  const body = c.req.valid("json");
+
+  if (!session) {
+    return c.json(
+      {
+        message: HttpStatusPhrases.UNAUTHORIZED
+      },
+      HttpStatusCodes.UNAUTHORIZED
+    );
+  }
+
+  try {
+    // Batch update all order indices
+    const updates = body.items.map((item) =>
+      db
+        .update(projects)
+        .set({ orderIndex: item.orderIndex, updatedAt: new Date() })
+        .where(eq(projects.id, item.id))
+    );
+
+    console.log({ updates });
+
+    await Promise.all(updates);
+
+    return c.json(
+      { message: "Project items reordered successfully" },
+      HttpStatusCodes.OK
+    );
+  } catch {
+    return c.json(
+      { message: "Failed to reorder project items" },
+      HttpStatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
 };

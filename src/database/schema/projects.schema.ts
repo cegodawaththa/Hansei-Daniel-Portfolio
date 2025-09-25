@@ -1,5 +1,5 @@
 import { sql, relations } from "drizzle-orm";
-import { index, pgTable, text, pgEnum } from "drizzle-orm/pg-core";
+import { index, pgTable, text, pgEnum, integer } from "drizzle-orm/pg-core";
 
 import { timestamps } from "@/lib/helpers";
 import { experiences } from "./experiences.schema";
@@ -27,6 +27,7 @@ export const projects = pgTable(
     client: text("client"),
     projectValue: text("project_value"),
 
+    orderIndex: integer("order_index").default(0),
     ...timestamps
   },
   (table) => [

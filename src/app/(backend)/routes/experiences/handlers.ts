@@ -33,6 +33,7 @@ type ExperienceWithProject = {
     location: string | null;
     client: string | null;
     projectValue: string | null;
+    orderIndex: number | null;
     createdAt: Date;
     updatedAt: Date | null;
   } | null;
@@ -54,6 +55,7 @@ function transformExperience(experience: ExperienceWithProject) {
           location: experience.project.location,
           client: experience.project.client,
           projectValue: experience.project.projectValue,
+          orderIndex: experience.project.orderIndex,
           createdAt: experience.project.createdAt.toISOString(),
           updatedAt: experience.project.updatedAt?.toISOString() || null
         }

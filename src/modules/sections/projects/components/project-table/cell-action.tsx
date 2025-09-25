@@ -11,12 +11,25 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 
-import { Project } from "./columns";
 import { DeleteProject } from "../delete";
 import { useRouter } from "next/navigation";
 
+// Update the interface to match the draggable table type
 interface CellActionProps {
-  data: Project;
+  data: {
+    id: string;
+    name: string;
+    description?: string | null;
+    thumbnails?: string[] | null;
+    projectType?: string | null;
+    status?: "completed" | "ongoing" | "future" | null | undefined;
+    location?: string | null;
+    client?: string | null;
+    projectValue?: string | null;
+    orderIndex?: number | null;
+    createdAt: string;
+    updatedAt: string | null;
+  };
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {

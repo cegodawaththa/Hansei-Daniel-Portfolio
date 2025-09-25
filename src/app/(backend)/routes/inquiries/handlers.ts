@@ -13,6 +13,32 @@ import type {
   RemoveRoute
 } from "./routes";
 
+// Type helper for raw database inquiry data
+type InquiryRaw = {
+  id: string;
+  name: string;
+  email: string;
+  company: string | null;
+  message: string;
+  status: "unread" | "read" | "archived" | null;
+  createdAt: Date;
+  updatedAt: Date | null;
+};
+
+// Helper function to transform inquiry data
+function transformInquiry(inquiry: InquiryRaw) {
+  return {
+    id: inquiry.id,
+    name: inquiry.name,
+    email: inquiry.email,
+    company: inquiry.company,
+    message: inquiry.message,
+    status: inquiry.status,
+    createdAt: inquiry.createdAt.toISOString(),
+    updatedAt: inquiry.updatedAt?.toISOString() || null
+  };
+}
+
 // List inquiries route handler (authentication required - admin only)
 export const list: AppRouteHandler<ListRoute> = async (c) => {
   const session = c.get("session");
@@ -74,12 +100,15 @@ export const list: AppRouteHandler<ListRoute> = async (c) => {
 
     const totalCount = _totalCount[0]?.count || 0;
 
+    // Transform dates to strings to match the API schema
+    const transformedData = inquiryEntries.map(transformInquiry);
+
     // Calculate pagination metadata
     const totalPages = Math.ceil(totalCount / limitNum);
 
     return c.json(
       {
-        data: inquiryEntries,
+        data: transformedData,
         meta: {
           currentPage: pageNum,
           totalPages,
@@ -123,7 +152,9 @@ export const getById: AppRouteHandler<GetByIdRoute> = async (c) => {
       );
     }
 
-    return c.json(inquiry, HttpStatusCodes.OK);
+    const transformedInquiry = transformInquiry(inquiry as InquiryRaw);
+
+    return c.json(transformedInquiry, HttpStatusCodes.OK);
   } catch {
     return c.json(
       { message: HttpStatusPhrases.INTERNAL_SERVER_ERROR },
@@ -148,7 +179,9 @@ export const create: AppRouteHandler<CreateRoute> = async (c) => {
       );
     }
 
-    return c.json(inserted, HttpStatusCodes.CREATED);
+    const transformedInquiry = transformInquiry(inserted as InquiryRaw);
+
+    return c.json(transformedInquiry, HttpStatusCodes.CREATED);
   } catch {
     return c.json(
       {
@@ -184,7 +217,9 @@ export const update: AppRouteHandler<UpdateRoute> = async (c) => {
     return c.json({ message: "Inquiry not found" }, HttpStatusCodes.NOT_FOUND);
   }
 
-  return c.json(updated, HttpStatusCodes.OK);
+  const transformedInquiry = transformInquiry(updated as InquiryRaw);
+
+  return c.json(transformedInquiry, HttpStatusCodes.OK);
 };
 
 // Delete inquiry handler (authentication required)

@@ -10,7 +10,7 @@ import {
   stringIdParamSchema
 } from "@/lib/server/helpers";
 import {
-  inquiriesSchema,
+  inquiriesAPIResponseSchema,
   insertInquiriesSchema,
   updateInquiriesSchema
 } from "@/lib/zod/inquiries.zod";
@@ -28,7 +28,7 @@ export const list = createRoute({
   },
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      getPaginatedSchema(z.array(inquiriesSchema)),
+      getPaginatedSchema(z.array(inquiriesAPIResponseSchema)),
       "The list of inquiries"
     ),
     [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
@@ -52,7 +52,10 @@ export const getById = createRoute({
     params: stringIdParamSchema
   },
   responses: {
-    [HttpStatusCodes.OK]: jsonContent(inquiriesSchema, "The inquiry item"),
+    [HttpStatusCodes.OK]: jsonContent(
+      inquiriesAPIResponseSchema,
+      "The inquiry item"
+    ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       errorMessageSchema,
       "Inquiry not found"
@@ -79,7 +82,7 @@ export const create = createRoute({
   },
   responses: {
     [HttpStatusCodes.CREATED]: jsonContent(
-      inquiriesSchema,
+      inquiriesAPIResponseSchema,
       "The inquiry created"
     ),
     [HttpStatusCodes.BAD_REQUEST]: jsonContent(
@@ -100,7 +103,10 @@ export const update = createRoute({
     body: jsonContentRequired(updateInquiriesSchema, "Update inquiry")
   },
   responses: {
-    [HttpStatusCodes.OK]: jsonContent(inquiriesSchema, "The inquiry updated"),
+    [HttpStatusCodes.OK]: jsonContent(
+      inquiriesAPIResponseSchema,
+      "The inquiry updated"
+    ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       errorMessageSchema,
       "Inquiry not found"

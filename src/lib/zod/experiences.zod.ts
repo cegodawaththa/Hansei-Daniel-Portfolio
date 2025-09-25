@@ -1,21 +1,35 @@
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
-import { experiences } from "@/database/schema/experiences.schema";
-
-export const experiencesSchema = createSelectSchema(experiences);
+// Base experiences schema (matches database table structure)
+export const experiencesSchema = z.object({
+  id: z.string(),
+  role: z.string().nullable(),
+  content: z.string().nullable(),
+  project: z.string().nullable(), // FK reference to projects
+  duration: z.string().nullable(),
+  createdAt: z.date(),
+  updatedAt: z.date().nullable()
+});
 
 export type ExperiencesSchemaT = z.infer<typeof experiencesSchema>;
 
-export const insertExperiencesSchema = createInsertSchema(experiences).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true
+// Insert schema (excludes auto-generated fields)
+export const insertExperiencesSchema = z.object({
+  role: z.string().nullable().optional(),
+  content: z.string().nullable().optional(),
+  project: z.string().nullable().optional(),
+  duration: z.string().nullable().optional()
 });
 
 export type InsertExperiencesSchemaT = z.infer<typeof insertExperiencesSchema>;
 
-export const updateExperiencesSchema = insertExperiencesSchema.partial();
+// Update schema (all fields optional)
+export const updateExperiencesSchema = z.object({
+  role: z.string().nullable().optional(),
+  content: z.string().nullable().optional(),
+  project: z.string().nullable().optional(),
+  duration: z.string().nullable().optional()
+});
 
 export type UpdateExperiencesSchemaT = z.infer<typeof updateExperiencesSchema>;
 
@@ -29,24 +43,21 @@ const relatedProjectSchema = z.object({
   location: z.string().nullable(),
   client: z.string().nullable(),
   projectValue: z.string().nullable(),
+  orderIndex: z.number().int().nullable(),
   createdAt: z.string(), // API returns string dates
   updatedAt: z.string().nullable()
 });
 
 // Extended schema for experiences with related project data (matches API output with string dates)
-export const experiencesWithProjectSchema = z
-  .object({
-    id: z.string(),
-    role: z.string().nullable(),
-    content: z.string().nullable(),
-    project: z.string().nullable(), // This is the FK reference
-    duration: z.string().nullable(),
-    createdAt: z.string(), // API returns string dates
-    updatedAt: z.string().nullable()
-  })
-  .extend({
-    project: relatedProjectSchema.nullable() // This overrides the FK with the full object
-  });
+export const experiencesWithProjectSchema = z.object({
+  id: z.string(),
+  role: z.string().nullable(),
+  content: z.string().nullable(),
+  project: relatedProjectSchema.nullable(), // Full project object instead of FK
+  duration: z.string().nullable(),
+  createdAt: z.string(), // API returns string dates
+  updatedAt: z.string().nullable()
+});
 
 export type ExperiencesWithProjectSchemaT = z.infer<
   typeof experiencesWithProjectSchema
