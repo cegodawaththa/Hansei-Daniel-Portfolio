@@ -17,9 +17,6 @@
     "drizzle:studio": "npx drizzle-kit studio"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.835.0",
-    "@aws-sdk/lib-storage": "^3.835.0",
-    "@aws-sdk/s3-request-presigner": "^3.835.0",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
@@ -64,6 +61,7 @@
     "@tiptap/react": "^2.26.1",
     "@tiptap/starter-kit": "^2.26.1",
     "@vercel/analytics": "^1.5.0",
+    "@vercel/blob": "^2.3.3",
     "@vercel/speed-insights": "^1.2.0",
     "better-auth": "^1.2.10",
     "class-variance-authority": "^0.7.1",

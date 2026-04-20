@@ -9,10 +9,7 @@ const envSchema = z.object({
   NEXT_PUBLIC_BETTER_AUTH_URL: z.string().optional(),
   NEXT_PUBLIC_CLIENT_APP_URL: z.string().url().optional(),
 
-  NEXT_PUBLIC_AWS_REGION: z.string().optional(),
-  NEXT_PUBLIC_AWS_ACCESS_KEY_ID: z.string().optional(),
-  NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY: z.string().optional(),
-  NEXT_PUBLIC_AWS_S3_BUCKET: z.string().optional()
+  BLOB_READ_WRITE_TOKEN: z.string().optional()
 });
 
 // Function to validate the environment variables
