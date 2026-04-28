@@ -20,6 +20,7 @@ import {
 import { GripVertical } from "lucide-react";
 
 import { useReorderEducations } from "../../queries/use-reorder-educations";
+import { CellAction } from "./cell-action";
 
 // Type that matches the API response
 type EducationItem = {
@@ -80,7 +81,9 @@ function DraggableRow({ education }: DraggableRowProps) {
       <td className="p-4 text-muted-foreground">
         {new Date(education.createdAt).toLocaleDateString()}
       </td>
-      <td className="p-4">{/* Action buttons can be added here */}</td>
+      <td className="p-4">
+        <CellAction data={education as never} />
+      </td>
     </tr>
   );
 }

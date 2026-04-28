@@ -33,9 +33,11 @@ export const metadata: Metadata = genMetadata({
 // import TestimonialsSection from "@/modules/landing/components/testimonials";
 
 export default async function Home() {
+  console.log("Fetching landing page data...");
+
   const landingPageData = await getLandingPageData();
 
-  console.log(landingPageData);
+  console.log("Landing page data fetched:", landingPageData);
 
   // Fake loading
   await new Promise((resolve) => setTimeout(resolve, 1000));
