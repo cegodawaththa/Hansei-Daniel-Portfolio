@@ -1,6 +1,7 @@
 import { and, desc, eq, ilike, sql } from "drizzle-orm";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 import * as HttpStatusPhrases from "stoker/http-status-phrases";
+import { del } from "@vercel/blob";
 
 import type { AppRouteHandler } from "@/lib/types/server";
 
@@ -212,6 +213,22 @@ export const remove: AppRouteHandler<RemoveRoute> = async (c) => {
       },
       HttpStatusCodes.UNAUTHORIZED
     );
+  }
+
+  // First, get the media record to obtain the blob URL
+  const mediaRecord = await db.query.media.findFirst({
+    where: (fields, { eq }) => eq(fields.id, params.id)
+  });
+
+  if (!mediaRecord) {
+    return c.json({ message: "Media not found" }, HttpStatusCodes.NOT_FOUND);
+  }
+
+  // Delete the blob from Vercel Blob storage
+  try {
+    await del(mediaRecord.url);
+  } catch (error) {
+    console.error("Failed to delete blob from storage:", error);
   }
 
   const [deleted] = await db

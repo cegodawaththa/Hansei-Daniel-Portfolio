@@ -1,19 +1,14 @@
-import { getClient } from "@/lib/rpc/client";
-import { DeleteObjectCommand } from "@aws-sdk/client-s3";
-import { Upload } from "@aws-sdk/lib-storage";
+import { upload } from "@vercel/blob/client";
 
-import { s3Client, s3Config } from "@/modules/media/config";
+import { getClient } from "@/lib/rpc/client";
+import { blobConfig } from "@/modules/media/config";
 import type {
   Media,
   MediaUploadType,
   QueryParamsSchema,
   UploadParams
 } from "@/modules/media/types";
-import {
-  generatePresignedUrl,
-  generateUniqueFileName,
-  getMediaType
-} from "@/modules/media/utils";
+import { generateUniqueFileName, getMediaType } from "@/modules/media/utils";
 
 export class MediaService {
   private static instance: MediaService;
@@ -33,47 +28,39 @@ export class MediaService {
     path = "",
     onProgress
   }: UploadParams): Promise<Media> {
-    // Step 1: Upload file to S3
+    // Step 1: Upload file to Vercel Blob
     const filename = generateUniqueFileName(file.name);
-    const key = path ? `${path}/${filename}` : filename;
+    const pathname = path ? `${path}/${filename}` : filename;
 
-    const upload = new Upload({
-      client: s3Client,
-      params: {
-        Bucket: s3Config.bucket,
-        Key: key,
-        Body: file,
-        ContentType: file.type,
-        ACL: "public-read", // This makes the object publicly readable
-        CacheControl: "max-age=31536000" // Optional: 1 year cache
-      }
-    });
-
-    // Track upload progress
-    upload.on("httpUploadProgress", (progress) => {
-      console.log("Upload progress:", progress);
-      if (!progress.loaded || !progress.total) return;
-
-      const percentCompleted = Math.round(
-        (progress.loaded / progress.total) * 100
-      );
-
-      if (onProgress) {
-        onProgress({
-          loaded: progress.loaded,
-          total: progress.total,
-          percentage: percentCompleted,
-          key: progress.Key!
-        });
-      }
-    });
+    // Signal uploading started
+    if (onProgress) {
+      onProgress({
+        loaded: 0,
+        total: file.size,
+        percentage: 0,
+        key: pathname
+      });
+    }
 
     try {
-      const result = await upload.done();
+      const blob = await upload(pathname, file, {
+        access: "public",
+        handleUploadUrl: blobConfig.uploadUrl
+      });
+
+      // Signal upload complete
+      if (onProgress) {
+        onProgress({
+          loaded: file.size,
+          total: file.size,
+          percentage: 100,
+          key: pathname
+        });
+      }
 
       // Step 2: Create media file metadata
       const mediaData: MediaUploadType = {
-        url: `${s3Config.baseUrl}/${result.Key}`,
+        url: blob.url,
         type: getMediaType(file.type),
         filename: filename,
         size: file.size,
@@ -107,18 +94,8 @@ export class MediaService {
     } catch (error) {
       console.log(error);
 
-      // If database save fails, try to clean up the S3 file to avoid orphaned files
-      try {
-        await this.deleteS3File(key);
-      } catch (cleanupError) {
-        console.error(
-          "Failed to clean up S3 file after database save error:",
-          cleanupError
-        );
-      }
-
       throw new Error(
-        `Failed to save media metadata to database: ${
+        `Failed to upload media: ${
           error instanceof Error ? error.message : String(error)
         }`
       );
@@ -126,18 +103,9 @@ export class MediaService {
   }
 
   async deleteFile(id: string) {
-    // Step 1: Get media details to know the S3 key
     const rpcClient = await getClient();
 
-    const media = await rpcClient.api.media[":id"].$get({
-      param: { id }
-    });
-
-    // Step 2: Delete from S3
-    const key = this.extractKeyFromUrl(media.url);
-    await this.deleteS3File(key);
-
-    // Step 3: Delete from database
+    // Delete from database (blob cleanup handled server-side in the delete handler)
     const deleteRes = await rpcClient.api.media[":id"].$delete({
       param: { id }
     });
@@ -148,28 +116,6 @@ export class MediaService {
     }
 
     return await deleteRes.json();
-  }
-
-  private async deleteS3File(key: string): Promise<void> {
-    await s3Client.send(
-      new DeleteObjectCommand({
-        Bucket: s3Config.bucket,
-        Key: key
-      })
-    );
-  }
-
-  private extractKeyFromUrl(url: string): string {
-    // Extract the key from the S3 URL
-    const baseUrlWithoutProtocol = s3Config.baseUrl.replace(/^https?:\/\//, "");
-    return url
-      .replace(/^https?:\/\//, "")
-      .replace(baseUrlWithoutProtocol + "/", "");
-  }
-
-  async getPresignedUrl(filename: string, path = ""): Promise<string> {
-    const key = path ? `${path}/${filename}` : filename;
-    return await generatePresignedUrl(key);
   }
 
   async getAllMedia(query: QueryParamsSchema) {
